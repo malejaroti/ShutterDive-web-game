@@ -38,7 +38,7 @@ body {
   height: 95%;
 
   position: relative; /* allows us to position inner elements (absolute) related the the game-box */
-  overflow: hidden; /* prevents elements to visually exit the game-box */
+  overflow: visible; /* prevents elements to visually exit the game-box */
   user-select: none; /* prevents elements inside the game-box to be highlighted. This improves the user experience for click events on the game-box */
 }
 

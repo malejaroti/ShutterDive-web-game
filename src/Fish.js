@@ -1,13 +1,29 @@
 class Fish extends Element {
-  constructor(x = 400, y = 60) {
-    const w = 80;
-    const h = 50;
+  constructor(fishType, x = gameBoxNode.offsetWidth, y = 60, w, h) {
     super(x, y, w, h);
-    this.w = w;
-    this.h = h;
-    this.node.src = `./images/Fish-YellowTang.png`;
-    this.node.style.transform = "scaleX(-1)";
-    this.swimmingSpeed = 2;
+    this.fishType = fishType;
+
+    this.swimmingSpeed = 1;
+
+    switch (fishType) {
+      case "Yellow-tang":
+        this.node.src = `./images/Fish-YellowTang.png`;
+        this.node.style.transform = "scaleX(-1)";
+        break;
+      case "Blue-tang":
+        this.node.src = `./images/Fish-BlueTang.png`;
+        break;
+      case "Parrotfish":
+        this.node.src = `./images/Fish-Parrotfish.png`;
+        this.node.style.transform = "scaleX(-1)";
+        break;
+      case "Greenturtle":
+        this.node.src = `./images/Greenturtle.png`;
+        this.node.style.transform = "scaleX(-1)";
+        break;
+      default:
+        break;
+    }
   }
 
   fishSwim() {

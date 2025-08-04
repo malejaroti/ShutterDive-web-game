@@ -9,6 +9,7 @@ class Diver extends Element {
 
     this.swimmingSpeed = 20;
     this.swimmingDirection = "Right";
+    // this.node.style.border = "1px black solid";
   }
   changeSwimDirection() {
     if (this.swimmingDirection === "Right") {
