@@ -1,7 +1,7 @@
 body {
   height: 90vh;
   width: 100%;
-  margin: 6rem 0 0;
+  /* margin: 6rem 0 0; */
   padding-right: 0;
   background-color: lightgray;
   border-right: 1px red solid;
@@ -28,6 +28,30 @@ body {
   width: 500px; */
 }
 
+#game-screen {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: rgb(3, 1, 84);
+  gap: 10px;
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-right: 1px solid black;
+}
+
+#game-info {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  background-color: blueviolet;
+  border: 1px black solid;
+  height: 5%;
+  width: 90%;
+}
+
 #game-box {
   /* background-color: blue; */
   background-image: url("../images/Background_option3.png");
@@ -35,7 +59,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   width: 90%;
-  height: 95%;
+  height: 90%;
 
   position: relative; /* allows us to position inner elements (absolute) related the the game-box */
   overflow: visible; /* prevents elements to visually exit the game-box */
@@ -46,17 +70,29 @@ body {
   pointer-events: none; /* prevents elements in the game-box to be dragged. This improves the user experience for click events on the game-box  */
 }
 
-#game-screen {
+#air-info {
   display: flex;
-  position: relative;
-  background-color: orange;
-  width: 90%;
-  height: 90%;
-  margin: auto;
-  margin-top: 2rem;
-  padding: 1rem;
-  border-right: 1px solid black;
+  align-items: center;
+  background-color: rgb(185, 194, 241);
+  width: 100px;
+  height: 20px;
+  text-align: center;
 }
+
+#pictures-info {
+  display: flex;
+  align-items: center;
+  background-color: rgb(185, 194, 241);
+  width: 150px;
+  height: 20px;
+  text-align: center;
+}
+
+/* #vital-signs {
+  background-color: rgb(185, 194, 241);
+  height: 300px;
+  width: 20%;
+  } */
 
 #game-over-screen {
   display: none;

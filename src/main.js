@@ -12,9 +12,14 @@ const gameBoxNode = document.querySelector("#game-box");
 
 //score box
 const scoreNode = document.querySelector("#score-value");
+const airTimeNode = document.querySelector("#air-time");
+const picturesAmountNode = document.querySelector("#pictures-amount");
 
 //* GLOBAL GAME VARIABLES
 let gameIntervalId = null;
+let fishSpawnIntervadId = null;
+const airDuration = 120; //sec
+let airTimeRemaining = airDuration;
 let fishSpawnFrequency = 3000;
 let diverObj;
 let fishObj;
@@ -65,6 +70,8 @@ function startGame() {
   cameraObj = new Camara(diverObj.x + 200, diverObj.y + 50, 110, 80);
   console.log(cameraObj);
 
+  startTimer();
+
   // 4. start the game loop (interval)
   gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60));
 
@@ -87,11 +94,6 @@ function handleDiverSwim(event) {
   diverObj.swimHorizontally(event.key);
   diverObj.swimVertically(event.key);
 }
-
-// function checkDiverWallCollition() {
-//   if (diverObj.x + diverObj.w === gameBoxNode.offsetWidth) {
-//   }
-// }
 
 function spawnFish(position) {
   if (position === "Top-third") {
@@ -142,6 +144,33 @@ function checkCollision(element1, element2) {
     return false;
   }
 }
+function startTimer() {
+  let airTimer = setInterval(() => {
+    airTimeRemaining--;
+    airTimeNode.innerText = convertTimeRemainingToString(airTimeRemaining);
+
+    // when the user runs out of time we immediatly move to the final page
+    if (airTimeRemaining <= 0) {
+      clearInterval(airTimer);
+      clearInterval(gameIntervalId);
+      clearInterval(fishSpawnIntervadId);
+      // ensures the timer resets
+      // showGameOverScreen();
+    }
+  }, 1000);
+  // return airTimer;
+}
+function convertTimeRemainingToString(time) {
+  const minutes = Math.floor(time / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = (time % 60).toString().padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
+
+function gameOver() {
+  clearInterval(gameIntervalId);
+}
 //----------------------------------------------------------------------------------------
 // EVENT LISTENERS
 startGame();
@@ -167,6 +196,7 @@ document.addEventListener("keydown", (event) => {
     cameraObj.node.style.display = "block";
     cameraObj.node.style.backgroundColor = "rgba(185, 178, 134, 0.5)";
     totalPicturesTaken++;
+    picturesAmountNode.innerText = totalPicturesTaken;
     console.log(`Total pictures: ${totalPicturesTaken}`);
     // console.log(`Pictures without fish: ${totalPicturesTaken - fishPictures}`);
     scoreNode.innerText = totalPicturesTaken;
