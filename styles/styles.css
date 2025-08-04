@@ -1,0 +1,74 @@
+body {
+  height: 90vh;
+  width: 100%;
+  margin: 6rem 0 0;
+  padding-right: 0;
+  background-color: lightgray;
+  border-right: 1px red solid;
+  box-sizing: border-box;
+}
+
+#start-btn {
+  display: none;
+  background-color: green;
+  color: white;
+  padding: 20px;
+  font-size: 20px;
+  margin-top: 40px;
+  border-radius: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin: 50px; */
+  /* height: 500px;
+  width: 500px; */
+}
+
+#game-box {
+  /* background-color: blue; */
+  background-image: url("../images/Background_option3.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 90%;
+  height: 95%;
+
+  position: relative; /* allows us to position inner elements (absolute) related the the game-box */
+  overflow: hidden; /* prevents elements to visually exit the game-box */
+  user-select: none; /* prevents elements inside the game-box to be highlighted. This improves the user experience for click events on the game-box */
+}
+
+#game-box * {
+  pointer-events: none; /* prevents elements in the game-box to be dragged. This improves the user experience for click events on the game-box  */
+}
+
+#game-screen {
+  display: flex;
+  position: relative;
+  background-color: orange;
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-right: 1px solid black;
+}
+
+#game-over-screen {
+  display: none;
+}
+
+#score {
+  background-color: aquamarine;
+  position: absolute;
+  top: 50px;
+  right: 20px;
+}
+
+#diver {
+  border: 1px solid black;
+}

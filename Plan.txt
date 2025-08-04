@@ -1,0 +1,3 @@
+Plan
+1. Class for diver
+2. Make the diver move with the arrows

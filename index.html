@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <title>Shutter Dive</title>
+  </head>
+  <body>
+    <!-- START SCREEN -->
+    <div>
+      <!-- <img src="" alt=""> -->
+      <button id="start-btn">Start!</button>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="game-screen" class="container">
+      <div id="game-box">
+        <!-- Game elements will be added here via javascript and DOM manipulation -->
+      </div>
+      <div id="score">
+        <p>Score: <span id="score-value">0</span></p>
+      </div>
+    </div>
+
+    <!-- GAME OVER  / DIVE LOG SCREEN  -->
+    <div id="game-over-screen" class="container">
+      <div id="dive-log"></div>
+    </div>
+    <script src="./src/Element.js"></script>
+    <script src="./src/Fish.js"></script>
+    <script src="./src/Diver.js"></script>
+    <script src="./src/main.js"></script>
+  </body>
+</html>
