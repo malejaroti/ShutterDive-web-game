@@ -1,6 +1,7 @@
 class Camara {
   constructor(x, y, w, h) {
     this.node = document.createElement(`div`);
+    this.node.className = `camara`;
     gameBoxNode.append(this.node);
 
     this.x = x;

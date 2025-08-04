@@ -2,6 +2,7 @@ class Fish extends Element {
   constructor(fishType, x = gameBoxNode.offsetWidth, y = 60, w, h) {
     super(x, y, w, h);
     this.fishType = fishType;
+    this.node.style.border = "1px black solid";
 
     this.swimmingSpeed = 1;
 
@@ -15,7 +16,6 @@ class Fish extends Element {
         break;
       case "Parrotfish":
         this.node.src = `./images/Fish-Parrotfish.png`;
-        this.node.style.transform = "scaleX(-1)";
         break;
       case "Greenturtle":
         this.node.src = `./images/Greenturtle.png`;

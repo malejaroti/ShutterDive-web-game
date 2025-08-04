@@ -11,14 +11,14 @@ const startBtnNode = document.querySelector("#start-btn");
 const gameBoxNode = document.querySelector("#game-box");
 
 //score box
-const scoreNode = document.querySelector("#score");
+const scoreNode = document.querySelector("#score-value");
 
 //* GLOBAL GAME VARIABLES
 let gameIntervalId = null;
-let fishSpawnFrequency = 2000;
+let fishSpawnFrequency = 3000;
 let diverObj;
 let fishObj;
-let camaraObj;
+let cameraObj;
 const fishArray = [];
 const allFishNamesAndSizes = [
   {
@@ -29,12 +29,12 @@ const allFishNamesAndSizes = [
   {
     fishName: "Blue-tang",
     w: 70,
-    h: 90,
+    h: 50,
   },
   {
     fishName: "Parrotfish",
     w: 100,
-    h: 70,
+    h: 50,
   },
   {
     fishName: "Greenturtle",
@@ -43,8 +43,13 @@ const allFishNamesAndSizes = [
   },
 ];
 const fishPostitionsArr = [80, 180, 300];
-let fishIndex = 0;
 
+let takingPicture = false;
+const picturesTaken = [];
+let totalPicturesTaken = 0;
+let perfectPictures = 0;
+let emptyPictures = 0;
+let fishPictures = 0;
 //* GLOBAL GAME FUNCTIONS
 function startGame() {
   console.log("hola");
@@ -57,13 +62,15 @@ function startGame() {
   //3. add any inital elements to the game
   diverObj = new Diver();
   console.log(diverObj);
-  camaraObj = new Camara(diverObj.x + 200, diverObj.y + 50, 80, 50);
+  cameraObj = new Camara(diverObj.x + 200, diverObj.y + 50, 110, 80);
+  console.log(cameraObj);
 
   // 4. start the game loop (interval)
   gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60));
 
   //5. We start any other interval or timeout that we may need
   fishSpawnIntervadId = setInterval(spawnFish, fishSpawnFrequency);
+  // setInterval(diverObj.negativeBuoyancyEffect(), 1000);
 }
 
 function gameLoop() {
@@ -71,8 +78,9 @@ function gameLoop() {
   fishArray.forEach((fish) => {
     fish.swimHorizontally("Left");
   });
-
-  // fishdespawning();
+  fishdespawning();
+  // capturePicture();
+  // diverObj.negativeBuoyancyEffect();
 }
 
 function handleDiverSwim(event) {
@@ -80,10 +88,10 @@ function handleDiverSwim(event) {
   diverObj.swimVertically(event.key);
 }
 
-// function checkDiverWallCollition(wallPosition) {
-//   if (wallPosition === "RightWall") {
-//     diverObj.changeSwimDirection("toLeft");
+// function checkDiverWallCollition() {
+//   if (diverObj.x + diverObj.w === gameBoxNode.offsetWidth) {
 //   }
+// }
 
 function spawnFish(position) {
   if (position === "Top-third") {
@@ -98,7 +106,6 @@ function spawnFish(position) {
   fishArray.push(new Fish(fishName, undefined, fishPosY, fishWidth, fishHeight));
 }
 function fishdespawning() {
-  console.log(fishArray[0], fishArray[0].x);
   if (fishArray[0] && fishArray[0].x < [0 - fishArray[0].w]) {
     //destroy the first obstacle
     //! To remove elements from the game we need to consider both environments
@@ -109,16 +116,32 @@ function fishdespawning() {
 
 function positionCameraFocus() {
   if (diverObj.swimmingDirection === "Right") {
-    camaraObj.x = diverObj.x + 200; // Update logical position
+    cameraObj.x = diverObj.x + 200; // Update logical position
   } else if (diverObj.swimmingDirection === "Left") {
-    camaraObj.x = diverObj.x - 80;
+    cameraObj.x = diverObj.x - 80;
   }
-  camaraObj.y = diverObj.y + 50;
+  cameraObj.y = diverObj.y + 50;
 
-  camaraObj.node.style.left = `${camaraObj.x}px`; // update DOM position
-  camaraObj.node.style.top = `${camaraObj.y}px`; // update DOM position
+  cameraObj.node.style.left = `${cameraObj.x}px`; // update DOM position
+  cameraObj.node.style.top = `${cameraObj.y}px`; // update DOM position
 }
 
+function capturePicture() {
+  fishArray.forEach((fish) => {
+    if (checkCollision(cameraObj, fish)) {
+      if (takingPicture) {
+        scoreNode.innerText++;
+      }
+    }
+  });
+}
+function checkCollision(element1, element2) {
+  if (element1.x < element2.x + element2.w && element1.x + element1.w > element2.x && element1.y < element2.y + element2.h && element1.y + element1.h > element2.y) {
+    return true;
+  } else {
+    return false;
+  }
+}
 //----------------------------------------------------------------------------------------
 // EVENT LISTENERS
 startGame();
@@ -128,16 +151,58 @@ document.addEventListener("keydown", handleDiverSwim);
 //Show camara Focus
 document.addEventListener("keydown", (event) => {
   if (event.code === "KeyX") {
-    camaraObj.node.style.display = "block";
+    cameraObj.node.style.display = "block";
   }
 });
-
+//Hide camera focus
 document.addEventListener("keyup", (event) => {
   if (event.code === "KeyX") {
-    camaraObj.node.style.display = "none";
+    cameraObj.node.style.display = "none";
   }
 });
 
+//Take picture (background of the focus changes and "Click" sounds)
+document.addEventListener("keydown", (event) => {
+  if (event.code === "KeyZ") {
+    cameraObj.node.style.display = "block";
+    cameraObj.node.style.backgroundColor = "rgba(185, 178, 134, 0.5)";
+    totalPicturesTaken++;
+    console.log(`Total pictures: ${totalPicturesTaken}`);
+    // console.log(`Pictures without fish: ${totalPicturesTaken - fishPictures}`);
+    scoreNode.innerText = totalPicturesTaken;
+    let cameraRight = cameraObj.x + cameraObj.w;
+    let cameraBottom = cameraObj.y + cameraObj.h;
+
+    fishArray.forEach((fish) => {
+      if (checkCollision(cameraObj, fish)) {
+        let fishRigth = fish.x + fish.w;
+        let fishBottom = fish.y + fish.h;
+        // console.log(`position camera: x:${cameraObj.x} -${cameraRight}, y:${cameraObj.y}-${cameraBottom}`);
+        // console.log(`position fish:   x:${fish.x}-${fishRigth}, y:${fish.y}-${fishBottom}`);
+        // prettier-ignore
+        if (cameraObj.x <= fish.x && cameraRight >= fishRigth && 
+            cameraObj.y <= fish.y && cameraBottom >= fishBottom) {
+            perfectPictures++;
+            console.log(`Perfect pictures: ${perfectPictures}`)
+        }
+
+        console.log(fish.fishType);
+        fishPictures++;
+        console.log(`Fish pictures: ${fishPictures}`);
+      }
+    });
+    //todo Add Click sound
+  }
+});
+//Return to normal transparend background
+document.addEventListener("keyup", (event) => {
+  if (event.code === "KeyZ") {
+    cameraObj.node.style.display = "none";
+    cameraObj.node.style.backgroundColor = "transparent";
+  }
+});
+
+//Prevent screen from scrolling when using arrows
 document.addEventListener("keydown", function (event) {
   const keysToBlock = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space", "PageUp", "PageDown"];
 
