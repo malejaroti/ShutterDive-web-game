@@ -1,3 +1,6 @@
-Plan
-1. Class for diver
-2. Make the diver move with the arrows
+Questions to Jorge
+1. Should the diver not be able to collision with fish? In reality if fish meet a diver they move around it
+2. How long should a dive be? Is 1min30 too long?
+3. If I make corals appear, should they appear randomly and be avoided? or only on the sea bottom?
+4. Should fish have different speed? Should I randomize them?
+5. Should I prevent "Rafagas" ? Right now the user can continuosly click the bottom (Key Z) for "take picture" 

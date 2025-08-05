@@ -32,7 +32,6 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: rgb(3, 1, 84);
   gap: 10px;
   width: 90%;
   height: 90%;
@@ -45,16 +44,15 @@ body {
 #game-info {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
-  background-color: blueviolet;
+  align-items: center;
+  background-color: rgb(43, 195, 226);
   border: 1px black solid;
   height: 5%;
   width: 90%;
+  padding: 0.3rem 1rem;
 }
 
 #game-box {
-  /* background-color: blue; */
-  background-image: url("../images/Background_option3.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -72,11 +70,34 @@ body {
 
 #air-info {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   background-color: rgb(185, 194, 241);
-  width: 100px;
+  /* width: 250px; */
+  width: fit-content;
   height: 20px;
   text-align: center;
+  gap: 2rem; /* Espacio entre el <p> y el anuncio */
+}
+
+#air-info p {
+  width: auto;
+  margin: 0;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+#announcement-extra-air {
+  background-color: rgb(185, 194, 241);
+  border: 1px black solid;
+  width: auto;
+  padding: 0 0.5rem;
+  margin-left: 1rem;
+}
+
+#info-extra-air {
+  display: none;
 }
 
 #pictures-info {

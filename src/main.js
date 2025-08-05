@@ -3,6 +3,7 @@
 const startScreenNode = document.querySelector("#start-screen");
 const gameScreenNode = document.querySelector("#game-screen");
 const gameOverScreenNode = document.querySelector("#game-over-screen");
+const diveLogNode = document.querySelector("#dive-log");
 
 // buttons
 const startBtnNode = document.querySelector("#start-btn");
@@ -13,23 +14,28 @@ const gameBoxNode = document.querySelector("#game-box");
 //score box
 const scoreNode = document.querySelector("#score-value");
 const airTimeNode = document.querySelector("#air-time");
+const infoExtraAirNode = document.querySelector("#info-extra-air");
 const picturesAmountNode = document.querySelector("#pictures-amount");
 
+//--------------------------------------------------------------------------------------------------
 //* GLOBAL GAME VARIABLES
 let gameIntervalId = null;
 let fishSpawnIntervadId = null;
-const airDuration = 120; //sec
+const airDuration = 90; //sec
 let airTimeRemaining = airDuration;
 let fishSpawnFrequency = 3000;
+// let otherDiverSpawnFrequency = ;
+let otherDiverAppearanceTime = [80, 40, 15]; // time remaining to end game
 let diverObj;
 let fishObj;
 let cameraObj;
+let otherDiverObj;
 const fishArray = [];
 const allFishNamesAndSizes = [
   {
     fishName: "Yellow-tang",
-    w: 80,
-    h: 50,
+    w: 50,
+    h: 40,
   },
   {
     fishName: "Blue-tang",
@@ -44,24 +50,35 @@ const allFishNamesAndSizes = [
   {
     fishName: "Greenturtle",
     w: 100,
+    h: 70,
+  },
+  {
+    fishName: "Grey-Angelfish",
+    w: 100,
+    h: 100,
+  },
+  {
+    fishName: "Flying-gurnard",
+    w: 100,
     h: 100,
   },
 ];
-const fishPostitionsArr = [80, 180, 300];
-
 let takingPicture = false;
 const picturesTaken = [];
 let totalPicturesTaken = 0;
 let perfectPictures = 0;
 let emptyPictures = 0;
 let fishPictures = 0;
+
+//--------------------------------------------------------------------------------------------------
 //* GLOBAL GAME FUNCTIONS
 function startGame() {
-  console.log("hola");
   //1. Hide the start game screen
   //   startScreenNode.style.display = "none";
 
   //   2. show the game screen
+  // Select background style
+  setBackground("transparent", "night");
   gameScreenNode.style.display = "flex";
 
   //3. add any inital elements to the game
@@ -82,11 +99,18 @@ function startGame() {
 
 function gameLoop() {
   positionCameraFocus();
+
   fishArray.forEach((fish) => {
     fish.swimHorizontally("Left");
   });
+
+  if (otherDiverObj) {
+    otherDiverObj.swimHorizontally("Left");
+    despawnOtherDiver();
+  }
   fishdespawning();
-  // capturePicture();
+
+  checkCollisionWithOtherDiver();
   // diverObj.negativeBuoyancyEffect();
 }
 
@@ -95,18 +119,22 @@ function handleDiverSwim(event) {
   diverObj.swimVertically(event.key);
 }
 
-function spawnFish(position) {
-  if (position === "Top-third") {
-  }
+function spawnFish() {
+  const fishPostitionsArr = [80, 180, 300, 400, 500];
   let randomPosFish = Math.floor(Math.random() * fishPostitionsArr.length);
   let fishPosY = fishPostitionsArr[randomPosFish];
 
   let randomFishIndex = Math.floor(Math.random() * allFishNamesAndSizes.length);
   fishName = allFishNamesAndSizes[randomFishIndex].fishName;
+
   fishWidth = allFishNamesAndSizes[randomFishIndex].w;
   fishHeight = allFishNamesAndSizes[randomFishIndex].h;
+  if (fishName === "Flying-gurnard") {
+    fishPosY = gameBoxNode.offsetHeight - fishHeight;
+  }
   fishArray.push(new Fish(fishName, undefined, fishPosY, fishWidth, fishHeight));
 }
+
 function fishdespawning() {
   if (fishArray[0] && fishArray[0].x < [0 - fishArray[0].w]) {
     //destroy the first obstacle
@@ -116,13 +144,33 @@ function fishdespawning() {
   }
 }
 
+function spawnOtherDiver() {
+  let otherDiverRandomPosY = Math.floor(Math.random() * gameBoxNode.offsetHeight - 80);
+  otherDiverObj = new OtherDiver(otherDiverRandomPosY);
+}
+
+function despawnOtherDiver() {
+  if (otherDiverObj.x < 0 - otherDiverObj.w || !otherDiverObj.node.isConnected) {
+    otherDiverObj.node.remove();
+    otherDiverObj = null;
+  }
+}
+
+function checkCollisionWithOtherDiver() {
+  if (otherDiverObj && checkCollision(diverObj, otherDiverObj)) {
+    otherDiverObj.node.remove();
+    otherDiverObj = null;
+    increaseAir();
+  }
+}
+
 function positionCameraFocus() {
   if (diverObj.swimmingDirection === "Right") {
     cameraObj.x = diverObj.x + 200; // Update logical position
   } else if (diverObj.swimmingDirection === "Left") {
-    cameraObj.x = diverObj.x - 80;
+    cameraObj.x = diverObj.x - 130;
   }
-  cameraObj.y = diverObj.y + 50;
+  cameraObj.y = diverObj.y + 15;
 
   cameraObj.node.style.left = `${cameraObj.x}px`; // update DOM position
   cameraObj.node.style.top = `${cameraObj.y}px`; // update DOM position
@@ -144,9 +192,23 @@ function checkCollision(element1, element2) {
     return false;
   }
 }
+
+function increaseAir() {
+  let increaseInAir = 5;
+  airTimeRemaining += increaseInAir;
+  console.log(`increased air by ${increaseInAir}. Now airTimeRemaning : ${airTimeRemaining}`);
+  infoExtraAirNode.style.display = "block";
+  infoExtraAirNode.innerText = `+${increaseInAir}sec of extra air!`;
+  setTimeout(() => {
+    infoExtraAirNode.style.display = "none";
+  }, 3000);
+}
+
 function startTimer() {
+  let i = 0;
   let airTimer = setInterval(() => {
     airTimeRemaining--;
+    // console.log(airTimeRemaining);
     airTimeNode.innerText = convertTimeRemainingToString(airTimeRemaining);
 
     // when the user runs out of time we immediatly move to the final page
@@ -156,6 +218,10 @@ function startTimer() {
       clearInterval(fishSpawnIntervadId);
       // ensures the timer resets
       // showGameOverScreen();
+    } else if (airTimeRemaining === otherDiverAppearanceTime[i]) {
+      console.log("time for other diver to appear");
+      spawnOtherDiver();
+      i++;
     }
   }, 1000);
   // return airTimer;
@@ -171,8 +237,25 @@ function convertTimeRemainingToString(time) {
 function gameOver() {
   clearInterval(gameIntervalId);
 }
+
+function showDiveLog() {}
+
+function setBackground(background, dayTime) {
+  if (background === "transparent") {
+    gameBoxNode.style.backgroundImage = `url("../images/Background_transparent.png")`;
+  } else if (background === "normal") {
+    gameBoxNode.style.backgroundImage = `url("../images/Background_option1.png")`;
+  }
+
+  if (dayTime === "night") {
+    gameScreenNode.style.backgroundColor = `rgb(3, 1, 84)`;
+  } else if (dayTime === "day") {
+    gameBoxNode.style.backgroundColor = `rgb(34, 114, 136)`;
+  }
+}
 //----------------------------------------------------------------------------------------
 // EVENT LISTENERS
+let focusActive = false;
 startGame();
 // scoreNode.addEventListener("click", startGame());
 document.addEventListener("keydown", handleDiverSwim);
@@ -181,12 +264,14 @@ document.addEventListener("keydown", handleDiverSwim);
 document.addEventListener("keydown", (event) => {
   if (event.code === "KeyX") {
     cameraObj.node.style.display = "block";
+    focusActive = true;
   }
 });
 //Hide camera focus
 document.addEventListener("keyup", (event) => {
   if (event.code === "KeyX") {
     cameraObj.node.style.display = "none";
+    focusActive = false;
   }
 });
 
@@ -199,7 +284,6 @@ document.addEventListener("keydown", (event) => {
     picturesAmountNode.innerText = totalPicturesTaken;
     console.log(`Total pictures: ${totalPicturesTaken}`);
     // console.log(`Pictures without fish: ${totalPicturesTaken - fishPictures}`);
-    scoreNode.innerText = totalPicturesTaken;
     let cameraRight = cameraObj.x + cameraObj.w;
     let cameraBottom = cameraObj.y + cameraObj.h;
 
@@ -224,11 +308,14 @@ document.addEventListener("keydown", (event) => {
     //todo Add Click sound
   }
 });
-//Return to normal transparend background
+//Return to normal transparent background
 document.addEventListener("keyup", (event) => {
   if (event.code === "KeyZ") {
-    cameraObj.node.style.display = "none";
-    cameraObj.node.style.backgroundColor = "transparent";
+    if (!focusActive) {
+      cameraObj.node.style.display = "none";
+    } else {
+      cameraObj.node.style.backgroundColor = "transparent";
+    }
   }
 });
 

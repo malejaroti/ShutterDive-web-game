@@ -1,16 +1,34 @@
 class Diver extends Element {
   constructor(x = 30, y = 30) {
-    const w = 200;
-    const h = 200;
+    let w,
+      h,
+      src,
+      diverSelected = "Diver1";
+    switch (diverSelected) {
+      case "Diver1":
+        w = 150;
+        h = 150;
+        src = "./images/Diver.png";
+        break;
+      case "Diver2":
+        w = 180;
+        h = 90;
+        src = "./images/Diver2.png";
+        break;
+      default:
+        w = 150;
+        h = 70;
+        src = "./images/Diver2.png";
+        break;
+    }
     super(x, y, w, h);
     this.w = w;
     this.h = h;
-    this.node.src = `./images/Diver.png`;
-
-    this.swimmingSpeed = 20;
+    this.node.src = src;
+    this.swimmingSpeed = 10;
     this.swimmingDirection = "Right";
     this.speedBuoyancyEffect = 10;
-    // this.node.style.border = "1px black solid";
+    // this.node.style.border = "1px white solid";
 
     this.diverAgainstRightWall = false;
   }
@@ -49,10 +67,10 @@ class Diver extends Element {
     }
   }
   swimVertically(keyEvent) {
-    if (keyEvent === "ArrowUp" && this.y + 50 > 0) {
+    if (keyEvent === "ArrowUp" && this.y > 0) {
       this.y -= this.swimmingSpeed;
     } else if (keyEvent === "ArrowDown") {
-      if (diverObj.y + diverObj.h - 30 > gameBoxNode.offsetHeight) {
+      if (diverObj.y + diverObj.h > gameBoxNode.offsetHeight) {
         console.log("Collision with sea bottom, stop!");
         return;
       }
