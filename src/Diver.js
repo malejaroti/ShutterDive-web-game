@@ -70,8 +70,8 @@ class Diver extends Element {
     if (keyEvent === "ArrowUp" && this.y > 0) {
       this.y -= this.swimmingSpeed;
     } else if (keyEvent === "ArrowDown") {
+      //Prevent to swim beyond sea bottom
       if (diverObj.y + diverObj.h > gameBoxNode.offsetHeight) {
-        console.log("Collision with sea bottom, stop!");
         return;
       }
       this.y += this.swimmingSpeed;

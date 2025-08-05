@@ -3,7 +3,7 @@
 const startScreenNode = document.querySelector("#start-screen");
 const gameScreenNode = document.querySelector("#game-screen");
 const gameOverScreenNode = document.querySelector("#game-over-screen");
-const diveLogNode = document.querySelector("#dive-log");
+const diveLogFishCardsContainerNode = document.querySelector("#fish-cards-container");
 
 // buttons
 const startBtnNode = document.querySelector("#start-btn");
@@ -14,6 +14,7 @@ const gameBoxNode = document.querySelector("#game-box");
 //score box
 const scoreNode = document.querySelector("#score-value");
 const airTimeNode = document.querySelector("#air-time");
+const boxAnnouncementExtraAir = document.querySelector("#announcement-extra-air");
 const infoExtraAirNode = document.querySelector("#info-extra-air");
 const picturesAmountNode = document.querySelector("#pictures-amount");
 
@@ -21,11 +22,11 @@ const picturesAmountNode = document.querySelector("#pictures-amount");
 //* GLOBAL GAME VARIABLES
 let gameIntervalId = null;
 let fishSpawnIntervadId = null;
-const airDuration = 90; //sec
+const airDuration = 1; //sec
 let airTimeRemaining = airDuration;
 let fishSpawnFrequency = 3000;
-// let otherDiverSpawnFrequency = ;
-let otherDiverAppearanceTime = [80, 40, 15]; // time remaining to end game
+// let otherDiverAppearanceTime = [airDuration - 10, airDuration - 30, airDuration - 45];
+let otherDiverAppearanceTime = [5];
 let diverObj;
 let fishObj;
 let cameraObj;
@@ -34,31 +35,37 @@ const fishArray = [];
 const allFishNamesAndSizes = [
   {
     fishName: "Yellow-tang",
+    src: `./images/Fish-YellowTang.png`,
     w: 50,
     h: 40,
   },
   {
     fishName: "Blue-tang",
+    src: `./images/Fish-BlueTang.png`,
     w: 70,
     h: 50,
   },
   {
     fishName: "Parrotfish",
+    src: `./images/Fish-Parrotfish.png`,
     w: 100,
     h: 50,
   },
   {
     fishName: "Greenturtle",
+    src: `./images/Greenturtle.png`,
     w: 100,
     h: 70,
   },
   {
     fishName: "Grey-Angelfish",
+    src: `./images/Fish-grey-angelfish-t.png`,
     w: 100,
     h: 100,
   },
   {
     fishName: "Flying-gurnard",
+    src: `./images/Fish-flying-gurnard.png`,
     w: 100,
     h: 100,
   },
@@ -76,9 +83,11 @@ function startGame() {
   //1. Hide the start game screen
   //   startScreenNode.style.display = "none";
 
-  //   2. show the game screen
-  // Select background style
-  setBackground("transparent", "night");
+  //2. Select background style
+  // setBackground("transparent", "night");
+  setBackground("normal", "day");
+
+  //3. . show the game screen
   gameScreenNode.style.display = "flex";
 
   //3. add any inital elements to the game
@@ -87,6 +96,7 @@ function startGame() {
   cameraObj = new Camara(diverObj.x + 200, diverObj.y + 50, 110, 80);
   console.log(cameraObj);
 
+  //Start air timer
   startTimer();
 
   // 4. start the game loop (interval)
@@ -96,6 +106,17 @@ function startGame() {
   fishSpawnIntervadId = setInterval(spawnFish, fishSpawnFrequency);
   // setInterval(diverObj.negativeBuoyancyEffect(), 1000);
 }
+function gameOver() {
+  console.log("gameOver");
+
+  clearInterval(gameIntervalId);
+  gameScreenNode.style.display = "none";
+  console.log("paso la linea para econder gamescreen");
+  gameBoxNode.style.display = "none";
+  gameOverScreenNode.style.display = "flex";
+  showDiveLog();
+}
+startGame();
 
 function gameLoop() {
   positionCameraFocus();
@@ -125,14 +146,12 @@ function spawnFish() {
   let fishPosY = fishPostitionsArr[randomPosFish];
 
   let randomFishIndex = Math.floor(Math.random() * allFishNamesAndSizes.length);
-  fishName = allFishNamesAndSizes[randomFishIndex].fishName;
+  let randomFish = allFishNamesAndSizes[randomFishIndex];
 
-  fishWidth = allFishNamesAndSizes[randomFishIndex].w;
-  fishHeight = allFishNamesAndSizes[randomFishIndex].h;
-  if (fishName === "Flying-gurnard") {
-    fishPosY = gameBoxNode.offsetHeight - fishHeight;
+  if (randomFish.fishName === "Flying-gurnard") {
+    fishPosY = gameBoxNode.offsetHeight - randomFish.h;
   }
-  fishArray.push(new Fish(fishName, undefined, fishPosY, fishWidth, fishHeight));
+  fishArray.push(new Fish(randomFish, undefined, fishPosY));
 }
 
 function fishdespawning() {
@@ -145,7 +164,10 @@ function fishdespawning() {
 }
 
 function spawnOtherDiver() {
-  let otherDiverRandomPosY = Math.floor(Math.random() * gameBoxNode.offsetHeight - 80);
+  let otherDiverRandomPosY = Math.floor(Math.random() * gameBoxNode.offsetHeight);
+  if (otherDiverRandomPosY === gameBoxNode.offsetHeight) {
+    otherDiverRandomPosY -= 80;
+  }
   otherDiverObj = new OtherDiver(otherDiverRandomPosY);
 }
 
@@ -176,15 +198,6 @@ function positionCameraFocus() {
   cameraObj.node.style.top = `${cameraObj.y}px`; // update DOM position
 }
 
-function capturePicture() {
-  fishArray.forEach((fish) => {
-    if (checkCollision(cameraObj, fish)) {
-      if (takingPicture) {
-        scoreNode.innerText++;
-      }
-    }
-  });
-}
 function checkCollision(element1, element2) {
   if (element1.x < element2.x + element2.w && element1.x + element1.w > element2.x && element1.y < element2.y + element2.h && element1.y + element1.h > element2.y) {
     return true;
@@ -194,13 +207,13 @@ function checkCollision(element1, element2) {
 }
 
 function increaseAir() {
-  let increaseInAir = 5;
+  let increaseInAir = 10; //sec
   airTimeRemaining += increaseInAir;
   console.log(`increased air by ${increaseInAir}. Now airTimeRemaning : ${airTimeRemaining}`);
-  infoExtraAirNode.style.display = "block";
-  infoExtraAirNode.innerText = `+${increaseInAir}sec of extra air!`;
+  boxAnnouncementExtraAir.style.display = "block";
+  infoExtraAirNode.innerText = `+${increaseInAir} sec of extra air!`;
   setTimeout(() => {
-    infoExtraAirNode.style.display = "none";
+    boxAnnouncementExtraAir.style.display = "none";
   }, 3000);
 }
 
@@ -216,8 +229,7 @@ function startTimer() {
       clearInterval(airTimer);
       clearInterval(gameIntervalId);
       clearInterval(fishSpawnIntervadId);
-      // ensures the timer resets
-      // showGameOverScreen();
+      gameOver();
     } else if (airTimeRemaining === otherDiverAppearanceTime[i]) {
       console.log("time for other diver to appear");
       spawnOtherDiver();
@@ -234,11 +246,59 @@ function convertTimeRemainingToString(time) {
   return `${minutes}:${seconds}`;
 }
 
-function gameOver() {
-  clearInterval(gameIntervalId);
-}
+function showDiveLog() {
+  console.log(`Pictures taken: ${picturesTaken}`);
 
-function showDiveLog() {}
+  let diveLogFishArr = [];
+  let count = 0;
+
+  allFishNamesAndSizes.forEach((fish) => {
+    console.log(`fish: ${fish.fishName}: array filtered: ${picturesTaken.filter((picture) => picture === fish.fishName)}`);
+    diveLogFishArr.push({
+      fishName: fish.fishName,
+      pictures: picturesTaken.filter((picture) => picture === fish.fishName).length,
+      srcPicture: fish.src,
+    });
+  });
+  let testArr = [
+    {
+      fishName: "Yellow-tang",
+      pictures: 3,
+      srcPicture: `./images/Fish-YellowTang.png`,
+    },
+    {
+      fishName: "Parrotfish",
+      pictures: 6,
+      srcPicture: `./images/Fish-Parrotfish.png`,
+    },
+    {
+      fishName: "Grey-Angelfish",
+      pictures: 6,
+      srcPicture: `./images/Fish-grey-angelfish-t.png`,
+    },
+    {
+      fishName: "Flying-gurnard",
+      pictures: 6,
+      srcPicture: `./images/Fish-flying-gurnard.png`,
+    },
+  ];
+  diveLogFishArr = testArr;
+
+  console.log(`DiveLog arr: ${diveLogFishArr}`);
+  console.log(`DiveLog arr: ${diveLogFishArr.length}`);
+  diveLogFishArr.forEach((fish) => {
+    //prettier-ignore
+    diveLogFishCardsContainerNode.innerHTML += 
+      `<article class="fish-card">
+        <div class="fish-picture-and-name">
+          <img class="fish-image" src="${fish.srcPicture}" alt="${fish.fishName}" />
+          <p class="fish-name-card">${fish.fishName}</p>
+        </div>
+        <p class="fish-pictures">${fish.pictures} pics</p>
+       </article>
+      `;
+  });
+}
 
 function setBackground(background, dayTime) {
   if (background === "transparent") {
@@ -250,13 +310,13 @@ function setBackground(background, dayTime) {
   if (dayTime === "night") {
     gameScreenNode.style.backgroundColor = `rgb(3, 1, 84)`;
   } else if (dayTime === "day") {
-    gameBoxNode.style.backgroundColor = `rgb(34, 114, 136)`;
+    gameScreenNode.style.backgroundColor = `rgb(34, 114, 136)`;
   }
 }
 //----------------------------------------------------------------------------------------
 // EVENT LISTENERS
 let focusActive = false;
-startGame();
+
 // scoreNode.addEventListener("click", startGame());
 document.addEventListener("keydown", handleDiverSwim);
 
@@ -302,6 +362,11 @@ document.addEventListener("keydown", (event) => {
 
         console.log(fish.fishType);
         fishPictures++;
+        picturesTaken.push(fish.fishType);
+        // {
+        //   fishType: fish.fishType
+        // }
+        // )
         console.log(`Fish pictures: ${fishPictures}`);
       }
     });

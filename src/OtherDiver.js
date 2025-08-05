@@ -5,7 +5,7 @@ class OtherDiver extends Element {
     const h = 80;
     super(x, y, w, h);
     this.node.src = `./images/OtherDiver.png`;
-    this.node.style.border = "1px black solid";
+    // this.node.style.border = "1px black solid";
 
     this.swimmingSpeed = 5;
   }
