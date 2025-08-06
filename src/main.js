@@ -7,6 +7,9 @@ const diveLogFishCardsContainerNode = document.querySelector("#fish-cards-contai
 
 // buttons
 const startBtnNode = document.querySelector("#start-btn");
+const nightThemeNode = document.querySelector("#night-theme");
+const dayThemeNode = document.querySelector("#day-theme");
+const themeArticles = document.querySelectorAll("#themes article");
 
 // game box
 const gameBoxNode = document.querySelector("#game-box");
@@ -22,11 +25,11 @@ const picturesAmountNode = document.querySelector("#pictures-amount");
 //* GLOBAL GAME VARIABLES
 let gameIntervalId = null;
 let fishSpawnIntervadId = null;
-const airDuration = 1; //sec
+const airDuration = 60; //sec
 let airTimeRemaining = airDuration;
-let fishSpawnFrequency = 3000;
-// let otherDiverAppearanceTime = [airDuration - 10, airDuration - 30, airDuration - 45];
-let otherDiverAppearanceTime = [5];
+let fishSpawnFrequency = 1500;
+let otherDiverAppearanceTime = [airDuration - 10, airDuration - 30, airDuration - 45];
+// let otherDiverAppearanceTime = [5];
 let diverObj;
 let fishObj;
 let cameraObj;
@@ -67,7 +70,7 @@ const allFishNamesAndSizes = [
     fishName: "Flying-gurnard",
     src: `./images/Fish-flying-gurnard.png`,
     w: 100,
-    h: 100,
+    h: 80,
   },
 ];
 let takingPicture = false;
@@ -81,11 +84,7 @@ let fishPictures = 0;
 //* GLOBAL GAME FUNCTIONS
 function startGame() {
   //1. Hide the start game screen
-  //   startScreenNode.style.display = "none";
-
-  //2. Select background style
-  // setBackground("transparent", "night");
-  setBackground("normal", "day");
+  startScreenNode.style.display = "none";
 
   //3. . show the game screen
   gameScreenNode.style.display = "flex";
@@ -93,7 +92,7 @@ function startGame() {
   //3. add any inital elements to the game
   diverObj = new Diver();
   console.log(diverObj);
-  cameraObj = new Camara(diverObj.x + 200, diverObj.y + 50, 110, 80);
+  cameraObj = new Camara(diverObj.x + 200, diverObj.y + 50, 110, 90);
   console.log(cameraObj);
 
   //Start air timer
@@ -116,7 +115,6 @@ function gameOver() {
   gameOverScreenNode.style.display = "flex";
   showDiveLog();
 }
-startGame();
 
 function gameLoop() {
   positionCameraFocus();
@@ -149,7 +147,7 @@ function spawnFish() {
   let randomFish = allFishNamesAndSizes[randomFishIndex];
 
   if (randomFish.fishName === "Flying-gurnard") {
-    fishPosY = gameBoxNode.offsetHeight - randomFish.h;
+    fishPosY = gameBoxNode.offsetHeight - randomFish.h - 40;
   }
   fishArray.push(new Fish(randomFish, undefined, fishPosY));
 }
@@ -282,7 +280,7 @@ function showDiveLog() {
       srcPicture: `./images/Fish-flying-gurnard.png`,
     },
   ];
-  diveLogFishArr = testArr;
+  // diveLogFishArr = testArr;
 
   console.log(`DiveLog arr: ${diveLogFishArr}`);
   console.log(`DiveLog arr: ${diveLogFishArr.length}`);
@@ -300,30 +298,41 @@ function showDiveLog() {
   });
 }
 
-function setBackground(background, dayTime) {
-  if (background === "transparent") {
+function setBackground(theme) {
+  if (theme === "night") {
     gameBoxNode.style.backgroundImage = `url("../images/Background_transparent.png")`;
-  } else if (background === "normal") {
-    gameBoxNode.style.backgroundImage = `url("../images/Background_option1.png")`;
-  }
-
-  if (dayTime === "night") {
     gameScreenNode.style.backgroundColor = `rgb(3, 1, 84)`;
-  } else if (dayTime === "day") {
+  } else if (theme === "day") {
+    gameBoxNode.style.backgroundImage = `url("../images/Background_option1.png")`;
     gameScreenNode.style.backgroundColor = `rgb(34, 114, 136)`;
   }
 }
+
 //----------------------------------------------------------------------------------------
 // EVENT LISTENERS
 let focusActive = false;
+startBtnNode.addEventListener("click", startGame);
+nightThemeNode.addEventListener("click", () => {
+  console.log("Night theme clicked");
+  setBackground("night");
+  // themeArticles.forEach((article) => article.classList.remove("selected-theme"));
+  nightThemeNode.classList.toggle("selected-theme");
+});
 
-// scoreNode.addEventListener("click", startGame());
+dayThemeNode.addEventListener("click", () => {
+  setBackground("day");
+  themeArticles.forEach((article) => article.classList.remove("selected-theme"));
+  dayThemeNode.classList.add("selected-theme");
+});
+
 document.addEventListener("keydown", handleDiverSwim);
 
 //Show camara Focus
 document.addEventListener("keydown", (event) => {
   if (event.code === "KeyX") {
     cameraObj.node.style.display = "block";
+    cameraObj.node.style.border = "2px dashed black";
+    cameraObj.node.style.backgroundColor = "transparent";
     focusActive = true;
   }
 });
@@ -339,6 +348,7 @@ document.addEventListener("keyup", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code === "KeyZ") {
     cameraObj.node.style.display = "block";
+    cameraObj.node.style.border = "1px solid black";
     cameraObj.node.style.backgroundColor = "rgba(185, 178, 134, 0.5)";
     totalPicturesTaken++;
     picturesAmountNode.innerText = totalPicturesTaken;
@@ -376,10 +386,11 @@ document.addEventListener("keydown", (event) => {
 //Return to normal transparent background
 document.addEventListener("keyup", (event) => {
   if (event.code === "KeyZ") {
-    if (!focusActive) {
+    if (focusActive === false) {
       cameraObj.node.style.display = "none";
     } else {
       cameraObj.node.style.backgroundColor = "transparent";
+      cameraObj.node.style.border = "2px dashed black";
     }
   }
 });

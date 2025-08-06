@@ -4,7 +4,7 @@ class Fish extends Element {
     this.fishType = randomFish.fishName;
     // this.node.style.border = "1px black solid";
 
-    this.swimmingSpeed = 3;
+    this.swimmingSpeed = 2;
     this.node.src = randomFish.src;
   }
 

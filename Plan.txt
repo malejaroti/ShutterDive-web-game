@@ -4,3 +4,15 @@ Questions to Jorge
 3. If I make corals appear, should they appear randomly and be avoided? or only on the sea bottom?
 4. Should fish have different speed? Should I randomize them?
 5. Should I prevent "Rafagas" ? Right now the user can continuosly click the bottom (Key Z) for "take picture" 
+
+
+
+Feedback
+1- Change x and Y. X for taking pictures
+2. no parece tener tanto sentido moverse hacia los lados. Podria anadirse algo que haga mas interesante moverse a los lados. 
+3. ✅Speed Diver: a bit faster.
+4. Fish: at the beginning a bit slower, then faster. 
+5. Feedback if the picture was perfect
+6. in the score screen add how many perfect pictures were taken. 
+
+7. ✅Frame in dashes when it is the objectiv
