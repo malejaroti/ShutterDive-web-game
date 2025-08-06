@@ -3,7 +3,6 @@
 const startScreenNode = document.querySelector("#start-screen");
 const gameScreenNode = document.querySelector("#game-screen");
 const gameOverScreenNode = document.querySelector("#game-over-screen");
-const diveLogFishCardsContainerNode = document.querySelector("#fish-cards-container");
 
 // buttons
 const startBtnNode = document.querySelector("#start-btn");
@@ -15,8 +14,7 @@ const restartBtnNode = document.querySelector("#btn-restart");
 // game box
 const gameBoxNode = document.querySelector("#game-box");
 
-//score box
-const scoreNode = document.querySelector("#score-value");
+//Elements in game info row
 const airTimeNode = document.querySelector("#air-time");
 const boxAnnouncementExtraAir = document.querySelector("#announcement-extra-air");
 const infoExtraAirNode = document.querySelector("#info-extra-air");
@@ -24,6 +22,7 @@ const picturesAmountNode = document.querySelector("#pictures-amount");
 const perfectPicturesNode = document.querySelector("#perfect-pictures-amount");
 
 //Elements in game over screen
+const diveLogFishCardsContainerNode = document.querySelector("#fish-cards-container");
 const picturesTakenNode_gameOverScreen = document.querySelector("#pictures-taken");
 const perfectPictures_gameOverScreen = document.querySelector("#perfect-taken");
 
@@ -315,11 +314,14 @@ function capturePicture() {
       if (cameraObj.x <= fish.x && cameraRight >= fishRigth && 
           cameraObj.y <= fish.y && cameraBottom >= fishBottom) {
             cameraObj.node.style.backgroundColor = "rgba(112, 234, 128, 0.5)"
+            cameraObj.pictureQualityNode.style.display = "block"
             cameraObj.pictureQualityNode.innerText = "Perfect!"
+            setTimeout(() => {
+              cameraObj.pictureQualityNode.style.display = "none"
+            }, 700);
             perfectPictures++;
             perfectPicturesNode.innerText = perfectPictures;
-          perfectPicturesArr.push(fish.fishType)
-          console.log(`Perfect pictures: ${perfectPictures}`)
+            perfectPicturesArr.push(fish.fishType)
       }
 
       console.log(fish.fishType);

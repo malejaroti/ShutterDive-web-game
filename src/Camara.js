@@ -31,7 +31,7 @@ class Camara {
     // this.pictureQualityNode.style.width = `${qBox_width}px`;
 
     // Adjust initial position qualityBox
-    // this.pictureQualityNode.style.display = `flex`;
+    this.pictureQualityNode.style.display = "none";
     this.pictureQualityNode.style.position = "absolute";
     this.pictureQualityNode.style.left = qBox_x;
     this.pictureQualityNode.style.top = qBox_y;

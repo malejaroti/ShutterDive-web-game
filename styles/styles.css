@@ -220,27 +220,42 @@ body {
 
 #game-over-screen {
   display: none;
+  flex-direction: column;
   background-color: #e8f3fa;
   margin: auto;
+  padding: 1rem;
 }
 
 #game-over-screen > h1 {
-  font-size: 4rem;
-  margin-top: 2rem;
+  /* font-size: 4rem; */
+  height: 10%;
+  font-size: 2.5rem;
+  margin: 1rem auto;
 }
 
 #box-game-over {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 5rem;
   border: 1px black solid;
+  background-color: #d4e6ee;
+  max-height: 80%;
+  width: 70%;
+  box-sizing: border-box;
+  padding: 2rem 3rem;
 }
 
 #dive-log {
   background-color: rgb(236, 236, 225);
-  height: 500px;
-  width: 300px;
-  padding: 1rem 2rem 3rem;
+  /* height: 500px; */
+  height: 100%;
+  /* width: 40%; */
+  width: fit-content;
+  padding: 0 2rem 3rem;
   border: 1px black solid;
+  box-sizing: border-box;
 }
 
 #rankings {
@@ -248,9 +263,18 @@ body {
   flex-direction: column;
   background-color: rgb(236, 236, 225);
   border: 1px black solid;
-  height: 500px;
-  width: 300px;
+  height: 100%;
+  width: 40%;
   padding: 1rem;
+  box-sizing: border-box;
+}
+#dive-log h2,
+#rankings h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: Impact;
+  font-weight: 400;
+  margin-top: 1rem;
 }
 
 #ranking-sub-box {
@@ -262,20 +286,17 @@ body {
 
 .row-results {
   display: flex;
+  align-items: center;
   gap: 10px;
+  font-size: 1.4rem;
+  text-align: center;
 }
 
 .row-results p:nth-child(2) {
   border: 1px black solid;
   width: 2rem;
+  height: 2rem;
   text-align: center;
-  padding: 5px;
-}
-
-#dive-log h1 {
-  text-align: center;
-  font-family: Impact;
-  font-weight: 400;
 }
 
 #fish-cards-container {
@@ -289,6 +310,7 @@ body {
   gap: 1rem;
   overflow-y: auto;
   height: 80%;
+  /* box-sizing: border-box; */
 }
 
 .fish-card {
@@ -320,18 +342,18 @@ body {
 
 .fish-pictures {
   /* border: 1px dashed black; */
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   height: fit-content;
 }
 
 #btn-restart {
-  height: 200px;
+  min-height: 35px;
   font-size: 1.5rem;
-  margin: 4rem auto;
+  margin: 1rem auto;
 }
 
 .camara-quality-box {
-  border: 2px white solid;
+  /* border: 2px white solid; */
   width: auto;
   color: white;
   box-sizing: border-box;
