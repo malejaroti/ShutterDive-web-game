@@ -9,7 +9,6 @@
   <body>
     <!-- START SCREEN -->
     <div id="start-screen" class="container"></divid>>
-      <!-- <img src="" alt=""> -->
        <div>
         <h1>ShutterDive</h1>
        </div>
@@ -21,8 +20,8 @@
           <article id="day-theme">Day dive</article>
         </div>
        </div>
-       
-      <button id="start-btn">Start!</button>
+
+      <button id="start-btn" class="btn">Start!</button>
     </div>
 
     <!-- GAME SCREEN -->
@@ -34,7 +33,10 @@
             <p id="info-extra-air"></p>
           </div>
         </div>
-        <div id="pictures-info">
+        <div class="pictures-info">
+          <p>Perfect pictures: <span id="perfect-pictures-amount">0</span></p>
+        </div>
+        <div class="pictures-info">
           <p>Pictures Taken: <span id="pictures-amount">0</span></p>
         </div>
       </div>
@@ -45,11 +47,30 @@
 
     <!-- GAME OVER  / DIVE LOG SCREEN  -->
     <div id="game-over-screen" class="container">
-      <div id="dive-log">
-        <h1>Your Dive Log</h1>
-        <div id="fish-cards-container"></div>
+      <h1>Immersion data</h1>
+      <div id="box-game-over">
+        <div id="dive-log">
+          <h1>Your Dive Log</h1>
+          <div id="fish-cards-container"></div>
+        </div>
+        <div id="rankings">
+          <h2>Rankings</h2>
+          <div id="ranking-sub-box">
+            <div class="row-results">
+              <p>Total pictures taken</p>
+              <p id="pictures-taken"></p>
+            <div class="row-results">
+              <p>Perfect pictures taken</p>
+              <p id="perfect-taken"></p>
+          </div>
+          </div>
+        </div>
       </div>
+
+      <button id="btn-restart" class="btn">Play again!</button>
+      
     </div>
+
     <script src="./src/Element.js"></script>
     <script src="./src/Camara.js"></script>
     <script src="./src/Fish.js"></script>
