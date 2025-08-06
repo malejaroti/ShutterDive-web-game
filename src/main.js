@@ -73,6 +73,9 @@ const allFishNamesAndSizes = [
     h: 80,
   },
 ];
+const screenYPositionsForFishSpawningArr = [];
+
+//Picture related variables
 let takingPicture = false;
 const picturesTaken = [];
 let totalPicturesTaken = 0;
@@ -80,14 +83,22 @@ let perfectPictures = 0;
 let emptyPictures = 0;
 let fishPictures = 0;
 
+//General settings variables
+let selectedTheme = "night";
+
 //--------------------------------------------------------------------------------------------------
 //* GLOBAL GAME FUNCTIONS
 function startGame() {
+  console.log("Game Started");
   //1. Hide the start game screen
   startScreenNode.style.display = "none";
 
+  //2. Set Background for game screen
+  setBackground(selectedTheme);
+
   //3. . show the game screen
   gameScreenNode.style.display = "flex";
+  calculatePositionsForFishSpawning(4);
 
   //3. add any inital elements to the game
   diverObj = new Diver();
@@ -137,11 +148,19 @@ function handleDiverSwim(event) {
   diverObj.swimHorizontally(event.key);
   diverObj.swimVertically(event.key);
 }
-
+function calculatePositionsForFishSpawning(numPoints) {
+  console.log(`Game box height is: ${gameBoxNode.offsetHeight}`);
+  for (let i = 1; i <= numPoints; i++) {
+    // Divide the height into equal segments
+    const pos = Math.round((gameBoxNode.offsetHeight / (numPoints + 1)) * i);
+    screenYPositionsForFishSpawningArr.push(pos);
+  }
+  console.log(`Fish will appear in pos Y = [${screenYPositionsForFishSpawningArr}]`);
+}
 function spawnFish() {
-  const fishPostitionsArr = [80, 180, 300, 400, 500];
-  let randomPosFish = Math.floor(Math.random() * fishPostitionsArr.length);
-  let fishPosY = fishPostitionsArr[randomPosFish];
+  // const fishPostitionsArr = [80, 180, 300, 400, 500];
+  let randomPosFish = Math.floor(Math.random() * screenYPositionsForFishSpawningArr.length);
+  let fishPosY = screenYPositionsForFishSpawningArr[randomPosFish];
 
   let randomFishIndex = Math.floor(Math.random() * allFishNamesAndSizes.length);
   let randomFish = allFishNamesAndSizes[randomFishIndex];
@@ -314,13 +333,13 @@ let focusActive = false;
 startBtnNode.addEventListener("click", startGame);
 nightThemeNode.addEventListener("click", () => {
   console.log("Night theme clicked");
-  setBackground("night");
+  selectedTheme = "night";
   // themeArticles.forEach((article) => article.classList.remove("selected-theme"));
   nightThemeNode.classList.toggle("selected-theme");
 });
 
 dayThemeNode.addEventListener("click", () => {
-  setBackground("day");
+  selectedTheme = "day";
   themeArticles.forEach((article) => article.classList.remove("selected-theme"));
   dayThemeNode.classList.add("selected-theme");
 });
