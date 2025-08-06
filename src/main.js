@@ -26,6 +26,12 @@ const diveLogFishCardsContainerNode = document.querySelector("#fish-cards-contai
 const picturesTakenNode_gameOverScreen = document.querySelector("#pictures-taken");
 const perfectPictures_gameOverScreen = document.querySelector("#perfect-taken");
 
+//audio
+const cameraClickAudio = new Audio("./audio/singleCamaraClick.wav");
+const diverEntrySound = new Audio("./audio/diverEntrySound.wav");
+const streamUnderWaterAudio = new Audio("./audio/stream_underwater.ogg");
+streamUnderWaterAudio.volume = 0.5;
+
 //--------------------------------------------------------------------------------------------------
 //* GLOBAL GAME VARIABLES
 let gameIntervalId = null;
@@ -75,6 +81,11 @@ function startGame() {
   cameraObj = new Camara(diverObj.x + 200, diverObj.y + 50, 110, 90);
   console.log(cameraObj);
 
+  diverEntrySound.currentTime = 0;
+  diverEntrySound.play();
+  console.log("Audio dive entry sound duration:", diverEntrySound.duration, "seconds");
+  streamUnderWaterAudio.currentTime = 0;
+  streamUnderWaterAudio.play();
   //Start air timer
   startTimer();
 
@@ -87,9 +98,14 @@ function startGame() {
 }
 function gameOver() {
   console.log("gameOver");
-
   clearInterval(gameIntervalId);
+  //hide game screen
   gameScreenNode.style.display = "none";
+  //stop audio
+  streamUnderWaterAudio.pause();
+  streamUnderWaterAudio.currentTime = 0;
+
+  //Show game over screen
   gameOverScreenNode.style.display = "flex";
   showDiveLog();
   updateGeneralResultsBox();
@@ -294,6 +310,8 @@ function showDiveLog() {
 }
 
 function capturePicture() {
+  cameraClickAudio.currentTime = 0; //restart audio in case it triggers too fast
+  cameraClickAudio.play();
   cameraObj.node.style.display = "block";
   cameraObj.node.style.border = "1px solid black";
   cameraObj.node.style.backgroundColor = "rgba(185, 178, 134, 0.5)";
