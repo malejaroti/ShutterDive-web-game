@@ -31,10 +31,10 @@ const perfectPictures_gameOverScreen = document.querySelector("#perfect-taken");
 //* GLOBAL GAME VARIABLES
 let gameIntervalId = null;
 let fishSpawnIntervadId = null;
-const airDuration = 15; //sec
+const airDuration = 45; //sec
 let airTimeRemaining = airDuration;
 let fishSpawnFrequency = 1500;
-let otherDiverAppearanceTime = [airDuration - 10, airDuration - 30, airDuration - 45];
+let otherDiverAppearanceTime = [airDuration - 10, airDuration - 30, airDuration - 44];
 // let otherDiverAppearanceTime = [5];
 let diverObj;
 let fishObj;
@@ -245,7 +245,7 @@ function showDiveLog() {
   let count = 0;
 
   allFishNamesAndSizes.forEach((fish) => {
-    console.log(`fish: ${fish.fishName}: array filtered: ${picturesTaken.filter((picture) => picture === fish.fishName)}`);
+    // console.log(`fish: ${fish.fishName}: array filtered: ${picturesTaken.filter((picture) => picture === fish.fishName)}`);
     diveLogFishArr.push({
       fishName: fish.fishName,
       pictures: picturesTaken.filter((picture) => picture === fish.fishName).length,
@@ -277,8 +277,7 @@ function showDiveLog() {
   ];
   // diveLogFishArr = testArr;
 
-  console.log(`DiveLog arr: ${diveLogFishArr}`);
-  console.log(`DiveLog arr: ${diveLogFishArr.length}`);
+  //Sort by amount of pictures taken
   diveLogFishArr.sort((a, b) => b.pictures - a.pictures);
   diveLogFishArr.forEach((fish) => {
     //prettier-ignore
@@ -301,7 +300,7 @@ function capturePicture() {
   cameraObj.node.style.backgroundColor = "rgba(185, 178, 134, 0.5)";
   totalPicturesTaken++;
   picturesAmountNode.innerText = totalPicturesTaken;
-  console.log(`Total pictures: ${totalPicturesTaken}`);
+  // console.log(`Total pictures: ${totalPicturesTaken}`);
   // console.log(`Pictures without fish: ${totalPicturesTaken - fishPictures}`);
   let cameraRight = cameraObj.x + cameraObj.w;
   let cameraBottom = cameraObj.y + cameraObj.h;
@@ -352,7 +351,9 @@ function restartGame() {
   picturesAmountNode.innerText = "0";
   diveLogFishCardsContainerNode.innerHTML = "";
   diverObj.node.remove();
-  otherDiverObj.node.remove();
+  if (otherDiverObj) {
+    otherDiverObj.node.remove();
+  }
 
   //2. Show start screen
   startScreenNode.style.display = "flex";
@@ -415,10 +416,11 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keyup", (event) => {
   if (event.code === "KeyZ") {
     if (focusActive === false) {
-      //keep camera screen active for 2 sec
-      setTimeout(() => {
-        cameraObj.node.style.display = "none";
-      }, 2000);
+      cameraObj.node.style.display = "none";
+      // //keep camera screen active for 2 sec
+      // setTimeout(() => {
+      //   cameraObj.node.style.display = "none";
+      // }, 2000);
     } else {
       cameraObj.node.style.backgroundColor = "transparent";
       cameraObj.node.style.border = "2px dashed black";
