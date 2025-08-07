@@ -39,6 +39,7 @@ const cameraClickAudio = new Audio("./audio/singleCamaraClick.wav");
 const diverEntrySound = new Audio("./audio/diverEntrySound.wav");
 const streamUnderWaterAudio = new Audio("./audio/stream_underwater.ogg");
 const yaySound = new Audio("./audio/Yay.wav");
+const perfectPictureSound = new Audio("./audio/perfectSound.mp3");
 streamUnderWaterAudio.volume = 0.2;
 
 //--------------------------------------------------------------------------------------------------
@@ -384,6 +385,8 @@ function capturePicture() {
             setTimeout(() => {
               cameraObj.pictureQualityNode.style.display = "none"
             }, 700);
+              perfectPictureSound.currentTime = 0;
+              perfectPictureSound.play();
             perfectPictures++;
             perfectPicturesNode.innerText = perfectPictures; 
             score -= 500
