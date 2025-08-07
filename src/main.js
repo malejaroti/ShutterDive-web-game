@@ -316,30 +316,6 @@ function showDiveLog() {
   let speciesPhotographedArr = diveLogFishArr.filter((fish) => fish.pictures > 0);
   console.log(`Species photgraphed: ${speciesPhotographedArr}`);
 
-  let testArr = [
-    {
-      fishName: "Yellow-tang",
-      pictures: 3,
-      srcPicture: `./images/Fish-YellowTang.png`,
-    },
-    {
-      fishName: "Parrotfish",
-      pictures: 6,
-      srcPicture: `./images/Fish-Parrotfish.png`,
-    },
-    {
-      fishName: "Grey-Angelfish",
-      pictures: 6,
-      srcPicture: `./images/Fish-grey-angelfish-t.png`,
-    },
-    {
-      fishName: "Flying-gurnard",
-      pictures: 6,
-      srcPicture: `./images/Fish-flying-gurnard.png`,
-    },
-  ];
-  // diveLogFishArr = testArr;
-
   //Sort by amount of pictures taken
   let wordPics = "";
   diveLogFishArr.sort((a, b) => b.pictures - a.pictures);
@@ -452,7 +428,7 @@ function restartGame() {
 
 function setBackground(theme) {
   if (theme === "night") {
-    gameBoxNode.style.backgroundImage = `url("./images/Background_transparent.png")`;
+    gameBoxNode.style.backgroundImage = `url("./images/Background_transparent.PNG")`;
     gameScreenNode.style.backgroundColor = `rgb(3, 1, 84)`;
   } else if (theme === "day") {
     gameBoxNode.style.backgroundImage = `url("./images/Background_option1.png")`;
