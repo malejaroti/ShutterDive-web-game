@@ -62,10 +62,11 @@ let takingPicture = false;
 let totalPicturesTaken = 0;
 const picturesTaken = [];
 let perfectPictures = 0;
-let score = 0;
 const perfectPicturesArr = [];
 let emptyPictures = 0;
 let fishPictures = 0;
+let score = 0;
+let pointsPerPerfectPictureDifficulty = 1000;
 
 //General settings variables
 let selectedTheme = "night";
@@ -435,14 +436,18 @@ function setBackground(theme) {
     gameScreenNode.style.backgroundColor = `rgb(34, 114, 136)`;
   }
 }
-calculateFishArea();
-function calculateFishArea() {
+calculateFishAreaAndScores();
+function calculateFishAreaAndScores() {
   let cameraArea = cameraBoxWidth * cameraBoxHeight;
   console.log(`Camera area: ${cameraArea}`);
+
   allFishNamesAndSizes.forEach((fish) => {
+    //Calculate area of the fish image and its relationship with the camera's area
     fish["area"] = fish.w * fish.h;
     fish["Relationship-camaraBox %"] = Math.round((fish.area / cameraArea) * 10000) / 100;
     fish["Relationship-camaraBox diff"] = cameraArea - fish.area;
+
+    //Set difficulty for perfect picture depending on the area that the fish occuppies from the camera box
     if (fish["Relationship-camaraBox %"] >= 70) {
       fish["perfect-picture-difficulty"] = 3; // high
     } else if (fish["Relationship-camaraBox %"] >= 50 && fish["Relationship-camaraBox %"] < 70) {
@@ -450,7 +455,7 @@ function calculateFishArea() {
     } else {
       fish["perfect-picture-difficulty"] = 1; // Easy
     }
-    fish["perfect-picture-score"] = fish["perfect-picture-difficulty"] * 1000;
+    fish["perfect-picture-score"] = fish["perfect-picture-difficulty"] * pointsPerPerfectPictureDifficulty;
   });
 
   console.log(allFishNamesAndSizes);
