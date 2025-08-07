@@ -30,7 +30,7 @@ const perfectPictures_gameOverScreen = document.querySelector("#perfect-taken");
 const cameraClickAudio = new Audio("./audio/singleCamaraClick.wav");
 const diverEntrySound = new Audio("./audio/diverEntrySound.wav");
 const streamUnderWaterAudio = new Audio("./audio/stream_underwater.ogg");
-streamUnderWaterAudio.volume = 0.5;
+streamUnderWaterAudio.volume = 0.2;
 
 //--------------------------------------------------------------------------------------------------
 //* GLOBAL GAME VARIABLES
@@ -293,8 +293,14 @@ function showDiveLog() {
   // diveLogFishArr = testArr;
 
   //Sort by amount of pictures taken
+  let wordPics = "";
   diveLogFishArr.sort((a, b) => b.pictures - a.pictures);
   diveLogFishArr.forEach((fish) => {
+    if (fish.pictures === 1) {
+      wordPics = "pic";
+    } else {
+      wordPics = "pics";
+    }
     //prettier-ignore
     diveLogFishCardsContainerNode.innerHTML += 
       `<article class="fish-card">
@@ -302,7 +308,7 @@ function showDiveLog() {
           <img class="fish-image" src="${fish.srcPicture}" alt="${fish.fishName}" />
           <p class="fish-name-card">${fish.fishName}</p>
         </div>
-        <p class="fish-pictures">${fish.pictures} pics</p>
+        <p class="fish-pictures">${fish.pictures} ${wordPics}</p>
         <p class="fish-pictures">${fish.perfectPictures} perfect</p>
        </article>
       `;
@@ -393,10 +399,11 @@ function setBackground(theme) {
 // EVENT LISTENERS
 let focusActive = false;
 startBtnNode.addEventListener("click", startGame);
+
 nightThemeBtn.addEventListener("click", () => {
   console.log("Night theme clicked");
   selectedTheme = "night";
-  // themeArticles.forEach((article) => article.classList.remove("selected-theme"));
+  themeArticles.forEach((article) => article.classList.remove("selected-theme"));
   nightThemeBtn.classList.toggle("selected-theme");
 });
 
