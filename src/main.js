@@ -26,6 +26,8 @@ const scoreNodes = document.querySelectorAll(".score");
 const diveLogFishCardsContainerNode = document.querySelector("#fish-cards-container");
 const picturesTakenNode_gameOverScreen = document.querySelector("#pictures-taken");
 const perfectPictures_gameOverScreen = document.querySelector("#perfect-taken");
+const speciesPhotographed = document.querySelector("#species-photographed");
+const totalSpecies = document.querySelector("#total-species");
 
 //audio
 const cameraClickAudio = new Audio("./audio/singleCamaraClick.wav");
@@ -37,7 +39,7 @@ streamUnderWaterAudio.volume = 0.2;
 //* GLOBAL GAME VARIABLES
 let gameIntervalId = null;
 let fishSpawnIntervadId = null;
-const airDuration = 10; //sec
+const airDuration = 45; //sec
 let airTimeRemaining = airDuration;
 let fishSpawnFrequency = 1500;
 let otherDiverAppearanceTime = [airDuration - 10, airDuration - 30, airDuration - 44];
@@ -118,7 +120,9 @@ function gameOver() {
 function updateGeneralResultsBox() {
   picturesTakenNode_gameOverScreen.innerText = picturesTaken.length;
   perfectPictures_gameOverScreen.innerText = perfectPictures;
-  // scoreNode.innerText = score;
+  scoreNodes.forEach((scoreNode) => {
+    scoreNode.innerText = score;
+  });
 }
 
 function gameLoop() {
@@ -273,6 +277,10 @@ function showDiveLog() {
       srcPicture: fish.src,
     });
   });
+
+  let speciesPhotographedArr = diveLogFishArr.filter((fish) => fish.pictures > 0);
+  console.log(`Species photgraphed: ${speciesPhotographedArr}`);
+
   let testArr = [
     {
       fishName: "Yellow-tang",
@@ -318,6 +326,8 @@ function showDiveLog() {
        </article>
       `;
   });
+  speciesPhotographed.innerText = speciesPhotographedArr.length;
+  totalSpecies.innerText = allFishNamesAndSizes.length;
 }
 
 function capturePicture() {
@@ -357,8 +367,6 @@ function capturePicture() {
             perfectPicturesNode.innerText = perfectPictures; 
             score -= 500
             score += fish.scorePoints;
-            scoreNodes.forEach(scoreNode => {scoreNode.innerText = score})
-            // scoreNode.innerText = score 
             perfectPicturesArr.push(fish.fishType)
       }
 
@@ -368,7 +376,9 @@ function capturePicture() {
       // console.log(`Fish pictures: ${fishPictures}`);
     }
   });
-  //todo Add Click sound
+  scoreNodes.forEach((scoreNode) => {
+    scoreNode.innerText = score;
+  });
 }
 
 function restartGame() {
@@ -385,10 +395,15 @@ function restartGame() {
   perfectPictures = 0;
   emptyPictures = 0;
   fishPictures = 0;
+  score = 0;
   airTimeRemaining = airDuration;
 
   // Reset UI & DOM
   picturesAmountNode.innerText = "0";
+  perfectPicturesNode.innerText = "0";
+  scoreNodes.forEach((scoreNode) => {
+    scoreNode.innerText = "0";
+  });
   diveLogFishCardsContainerNode.innerHTML = "";
   diverObj.node.remove();
   if (otherDiverObj) {
@@ -401,10 +416,10 @@ function restartGame() {
 
 function setBackground(theme) {
   if (theme === "night") {
-    gameBoxNode.style.backgroundImage = `url("../images/Background_transparent.png")`;
+    gameBoxNode.style.backgroundImage = `url("./images/Background_transparent.png")`;
     gameScreenNode.style.backgroundColor = `rgb(3, 1, 84)`;
   } else if (theme === "day") {
-    gameBoxNode.style.backgroundImage = `url("../images/Background_option1.png")`;
+    gameBoxNode.style.backgroundImage = `url("./images/Background_option1.png")`;
     gameScreenNode.style.backgroundColor = `rgb(34, 114, 136)`;
   }
 }

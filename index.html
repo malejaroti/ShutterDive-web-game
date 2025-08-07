@@ -4,20 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="icon" type="image/png" href="./images/Diver.png" />
     <title>Shutter Dive</title>
   </head>
   <body>
     <!-- START SCREEN -->
     <div id="start-screen" class="container"></divid>>
-       <div>
-        <h1>ShutterDive</h1>
-       </div>
+       <h1>Shutter Dive</h1>
        
        <div id="theme-selection">
         <h2>Select a Theme</h2>
         <div id="themes">
-          <article id="night-theme" class="selected-theme">Night dive</article>
-          <article id="day-theme">Day dive</article>
+          <article id="night-theme" class="selected-theme">
+            <p>Night dive</p>
+          </article>
+          <article id="day-theme">            
+            <p>Day dive</p>
+          </article>
         </div>
        </div>
 
@@ -27,7 +30,7 @@
     <!-- GAME SCREEN -->
     <div id="game-screen" class="container">
       <div id="game-info">
-        <div id="air-info">
+        <div id="air-info" class="info-box">
           <p>Air: <span id="air-time">00:00</span></p>
           <div id="announcement-extra-air">
             <p id="info-extra-air"></p>
@@ -57,6 +60,9 @@
       <div id="box-game-over">
         <div id="dive-log-box">
           <h2>Your Dive Log</h2>
+          <div id="fish-species-box">
+            <p><span id="species-photographed">0</span> of <span id="total-species">0</span> species photographed</p>
+          </div>
           <div id="fish-cards-container"></div>
         </div>
         <div id="results-box">

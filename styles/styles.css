@@ -1,18 +1,23 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Barriecito&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Iso&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap");
+
 html,
 body {
-  height: 100vh;
-  min-height: 100vh;
+  /* height: 100vh; */
+  max-height: 100vh;
   margin: 0;
   padding: 0;
   background-color: lightgray;
   /* border-right: 1px red solid; */
   box-sizing: border-box;
+  font-family: DynaPuff;
 }
 
 .container {
   min-height: 90vh;
   height: 90vh;
-  width: 90vw;
+  max-width: 90vw;
   margin: 1rem;
 
   /* display: flex; */
@@ -33,22 +38,49 @@ body {
   /* margin: auto; */
   display: flex;
   height: 90vh;
-  background-color: rgb(169, 165, 213);
+  background-color: rgb(8, 0, 96);
+  background-image: url("../images/CoverOption1.png");
+  background-position: center;
+  /* background-size: cover; */
+  background-repeat: no-repeat;
+  background-size: contain;
   border: 1px black solid;
+  position: relative;
 
   h1 {
     /* border: 1px black solid; */
-    font-size: 4rem;
-    margin-bottom: 1rem;
+    font-size: 5vw;
+    /* margin-bottom: 1rem; */
+    color: rgb(255, 255, 255, 0.8);
+    /* -webkit-text-stroke: 0.5px black; */
+    /* font-family: Barriecito; */
+    /* font-family: Rubik Iso; */
+    font-family: DynaPuff;
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
   }
 }
 
 #theme-selection {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  /* border: 1px white solid; */
 
   h2 {
+    font-size: 1.2rem;
+    max-width: 80%;
     text-align: center;
+    color: white;
+    /* background-color: rgb(2, 136, 209, 0.6); */
+    width: fit-content;
+    padding: 0 0.5rem;
   }
 
   article {
@@ -57,39 +89,52 @@ body {
 }
 
 #themes {
+  width: 80px;
+  max-width: fit-content;
+  /* height: 50px; */
+  /* height: fit-content; */
   margin-top: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
-  width: 400px;
-  height: auto;
+  gap: 1rem;
   border: none;
   background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
   box-shadow: 0 4px 24px rgba(60, 60, 120, 0.12), 0 1.5px 6px rgba(60, 60, 120, 0.1);
   border-radius: 24px;
   padding: 1.5rem 2.5rem;
+  /* padding: auto; */
   margin-bottom: 1.5rem;
   transition: box-shadow 0.2s;
 }
 
 #themes article {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 100%; */
+  height: 10px;
+  /* flex: 1; */
+  /* max-height: fit-content; */
   text-align: center;
   background: linear-gradient(120deg, #b2fefa 0%, #0ed2f7 100%);
   border-radius: 16px;
-  /* border: none; */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  padding: 1rem 2.5rem;
-  font-size: 1.2rem;
-  color: #1a237e;
-  font-weight: bold;
+  /* padding: 1rem 1.5rem 1rem; */
+  /* font-size: 1.2rem; */
   cursor: pointer;
   transition: transform 0.12s, box-shadow 0.12s, background 0.2s;
   outline: none;
-  width: 100%;
 }
 
-#night-theme {
+#themes article p {
+  font-family: DynaPuff;
+  color: #1a237e;
+  font-weight: medium;
+  text-align: center;
+  margin: 0 auto;
   width: 100%;
 }
 
@@ -108,6 +153,7 @@ body {
 }
 
 .btn {
+  font-family: DynaPuff;
   display: block;
   background: linear-gradient(180deg, #8ce0f0 0%, #4fc3f7 60%, #0288d1 100%);
   height: 60px;
@@ -124,6 +170,10 @@ body {
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
+#start-btn {
+  position: absolute;
+  bottom: 2rem;
+}
 /* Glossy highlight */
 #start-btn::before {
   content: "";
@@ -137,6 +187,11 @@ body {
   pointer-events: none;
 }
 
+#start-btn:hover,
+#start-btn:focus {
+  background: linear-gradient(120deg, #0ed2f7 0%, #b2fefa 100%);
+  transform: translateY(-4px) scale(1.04);
+}
 /* Pressed effect */
 #start-btn:active {
   transform: translateY(3px);
@@ -172,38 +227,38 @@ body {
   pointer-events: none; /* prevents elements in the game-box to be dragged. This improves the user experience for click events on the game-box  */
 }
 
-#air-info {
+/* #air-info {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   background-color: rgb(185, 194, 241);
   border: 1px black solid;
-  /* width: 250px; */
   width: fit-content;
   height: 20px;
   text-align: center;
-  gap: 2rem; /* Espacio entre el <p> y el anuncio */
-}
+  gap: 2rem; 
+} */
 
-#air-info p {
+/* #air-info p {
   width: auto;
   margin: 0;
   padding: 0 0.5rem;
   white-space: nowrap;
   flex-shrink: 0;
-}
+} */
 
 #announcement-extra-air {
   display: none;
   background-color: rgb(244, 244, 89);
   border: 1px black solid;
   width: auto;
+  height: fit-content;
   padding: 0 0.5rem;
   margin-left: 1rem;
 }
 
 #info-extra-air {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .info-box {
@@ -212,7 +267,8 @@ body {
   align-items: center;
   background-color: rgb(185, 194, 241);
   border: 1px black solid;
-  width: 150px;
+  width: fit-content;
+  padding: 0.2rem 0.5rem;
   height: 20px;
   text-align: center;
 }
@@ -269,6 +325,7 @@ body {
   width: 70%;
   box-sizing: border-box;
   padding: 2rem 3rem;
+  font-size: 1vw;
 }
 
 #dive-log-box {
@@ -281,12 +338,26 @@ body {
   box-sizing: border-box;
 }
 
+#fish-species-box {
+  /* padding: auto; */
+  text-align: center;
+  /* font-size: 1.2rem; */
+  /* padding: 0.5rem; */
+  border: 1px black solid;
+}
+
+#fish-species-box span {
+  color: #1976d2;
+  font-size: 1.3vw;
+  /* font-size: 1.5rem; */
+}
+
 #fish-cards-container {
   background-color: #0288d1;
   border: 1px black solid;
   display: flex;
   /* margin: auto; */
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   margin-bottom: 1rem;
   padding: 1rem;
   width: fit-content;
@@ -321,8 +392,6 @@ body {
 #results-sub-box {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* border: 1px black solid; */
 }
 
 .row-results {
@@ -330,7 +399,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  font-size: 1.4rem;
+  font-size: 1vw;
   text-align: center;
 }
 
@@ -382,7 +451,7 @@ body {
 
 .fish-pictures {
   /* border: 1px dashed black; */
-  font-size: 1.1rem;
+  /* font-size: 1.1rem; */
   height: fit-content;
 }
 
