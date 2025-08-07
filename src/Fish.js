@@ -64,7 +64,7 @@ const allFishNamesAndSizes = [
   },
   {
     fishName: "Squid (caribbean)",
-    src: `./images/Caribbean-squid-3-tentaclesRight.png`,
+    src: `./images/Caribbean-squid-3-tentaclesRight.PNG`,
     w: 100,
     h: 80,
   },
