@@ -78,27 +78,19 @@ body {
 
 #instructions {
   font-family: "Courier New", Courier, monospace;
-  position: absolute;
-  left: 50%;
-  top: 55%;
-  transform: translateX(-50%);
   font-size: 2vh;
-  /* margin-top: 400px; */
   line-height: 1.5;
   width: fit-content;
   padding: 0.3rem 1rem;
-  /* height: auto; */
   text-align: center;
-  /* color: rgb(8, 8, 8); */
   color: white;
-  /* background-color: rgb(248, 250, 252, 0.5); */
   background-color: rgba(0, 0, 0, 0.5);
   margin-bottom: 2rem;
-
-  strong {
-    letter-spacing: 1px;
-    /* background-color: #4fc3f7; */
-  }
+  position: static; /* o elimina position si no lo necesitas */
+  left: auto;
+  top: auto;
+  transform: none;
+  display: none; /* por defecto oculto */
 }
 
 #player-name {
@@ -220,7 +212,7 @@ body {
   bottom: 5%;
 }
 /* Glossy highlight */
-#start-btn::before {
+.btn::before {
   content: "";
   position: absolute;
   top: 8px;
@@ -232,15 +224,10 @@ body {
   pointer-events: none;
 }
 
-#start-btn:hover,
-#start-btn:focus {
+.btn:hover,
+.btn:focus {
   background: linear-gradient(120deg, #0ed2f7 0%, #b2fefa 100%);
   transform: translateY(-4px) scale(1.04);
-}
-/* Pressed effect */
-#start-btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0 #1976d2, 0 1px 8px rgba(0, 0, 0, 0.18);
 }
 
 #game-info {
@@ -536,4 +523,64 @@ body {
 
 span.green {
   color: rgb(2, 164, 24);
+}
+
+#show-instructions-btn {
+  font-size: 1rem;
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: 110px;
+}
+
+/* Pressed effect */
+#show-instructions-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #1976d2, 0 1px 8px rgba(0, 0, 0, 0.18);
+}
+
+#instructions {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 400px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  text-align: center;
+  z-index: 1000;
+}
+
+#instructions p {
+  margin: 0;
+  padding: 0.5rem 0;
+  /* border-top: 1px solid rgba(255, 255, 255, 0.3); */
+}
+
+#instructions strong {
+  color: #4fc3f7;
+  /* background-color: rgb(2, 136, 209, 0.6); */
+  padding: 0 0.2rem;
+  border-radius: 4px;
+}
+
+#instructions em {
+  color: #ffeb3b;
+  /* background-color: rgb(2, 136, 209, 0.6); */
+  padding: 0 0.2rem;
+  border-radius: 4px;
+}
+
+#instructions small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
 }

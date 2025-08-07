@@ -10,6 +10,8 @@ const nightThemeBtn = document.querySelector("#night-theme");
 const dayThemeNode = document.querySelector("#day-theme");
 const themeArticles = document.querySelectorAll("#themes article");
 const playerNameInput = document.querySelector("#player-name");
+const showInstructionsBtn = document.getElementById("show-instructions-btn");
+const instructionsNode = document.getElementById("instructions");
 
 //Elements in Game Screen
 // game box
@@ -533,4 +535,8 @@ document.addEventListener("keydown", function (event) {
   if (keysToBlock.includes(event.key)) {
     event.preventDefault();
   }
+});
+
+showInstructionsBtn.addEventListener("click", () => {
+  instructionsNode.style.display = instructionsNode.style.display === "none" ? "block" : "none";
 });
