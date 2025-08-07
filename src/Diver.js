@@ -18,7 +18,7 @@ class Diver extends Element {
       default:
         w = 150;
         h = 70;
-        src = "./images/Diver2.png";
+        src = "./images/Diver.png";
         break;
     }
     super(x, y, w, h);

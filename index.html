@@ -33,11 +33,14 @@
             <p id="info-extra-air"></p>
           </div>
         </div>
-        <div class="pictures-info">
+        <div class="info-box">
           <p>Perfect pictures: <span id="perfect-pictures-amount">0</span></p>
         </div>
-        <div class="pictures-info">
+        <div class="info-box">
           <p>Pictures Taken: <span id="pictures-amount">0</span></p>
+        </div>
+        <div class="info-box">
+          <p>Score: <span class="score">0</span></p>
         </div>
       </div>
       <div id="game-box">
@@ -47,16 +50,18 @@
 
     <!-- GAME OVER  / DIVE LOG SCREEN  -->
     <div id="game-over-screen" class="container">
-      <h1>Immersion data</h1>
-
+      <header>
+        <img src="./images/Diver.png" alt="Diver">
+        <h1>Immersion data</h1>
+      </header>
       <div id="box-game-over">
-        <div id="dive-log">
+        <div id="dive-log-box">
           <h2>Your Dive Log</h2>
           <div id="fish-cards-container"></div>
         </div>
-        <div id="rankings">
-          <h2>Rankings</h2>
-          <div id="ranking-sub-box">
+        <div id="results-box">
+          <h2>Results</h2>
+          <div id="results-sub-box">
             <div class="row-results">
               <p>Total pictures taken</p>
               <p id="pictures-taken"></p>
@@ -64,6 +69,10 @@
             <div class="row-results">
               <p>Perfect pictures taken</p>
               <p id="perfect-taken"></p>
+            </div>
+            <div class="row-results">
+              <p>Score</p>
+              <p class="score"></p>
             </div>
         </div>
       </div>

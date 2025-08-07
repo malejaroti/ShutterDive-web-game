@@ -206,10 +206,12 @@ body {
   font-size: 1.5rem;
 }
 
-.pictures-info {
+.info-box {
   display: flex;
+  justify-content: center;
   align-items: center;
   background-color: rgb(185, 194, 241);
+  border: 1px black solid;
   width: 150px;
   height: 20px;
   text-align: center;
@@ -218,16 +220,40 @@ body {
 #game-over-screen {
   display: none;
   flex-direction: column;
-  background-color: #e8f3fa;
+  /* background-color: #e8f3fa; */
+  background-image: url("../images/Background_transparent.png");
+  /* background-color: rgb(34, 114, 136);
+  background-color: rgb(3, 1, 84); */
   margin: auto;
   padding: 1rem;
 }
 
-#game-over-screen > h1 {
+#game-over-screen header {
+  display: flex;
+  max-width: 60%;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  /* border: 1px solid black; */
+  margin-bottom: 0.2rem;
+}
+
+#game-over-screen header > h1 {
   /* font-size: 4rem; */
-  height: 10%;
-  font-size: 2.5rem;
+  height: fit-content;
+  font-size: 3.5rem;
+  font-size-adjust: 0.5;
   margin: 1rem auto;
+  /* color: wheat; */
+  font-family: Impact;
+  font-weight: 400;
+  text-align: center;
+  margin-top: -0.1rem;
+}
+
+#game-over-screen header > img {
+  max-width: 110px;
+  height: 85px;
 }
 
 #box-game-over {
@@ -238,26 +264,42 @@ body {
   gap: 5rem;
   border: 1px black solid;
   background-color: #d4e6ee;
+  height: 80vh;
   max-height: 80%;
   width: 70%;
   box-sizing: border-box;
   padding: 2rem 3rem;
 }
 
-#dive-log {
+#dive-log-box {
   background-color: rgb(236, 236, 225);
-  /* height: 500px; */
   height: 100%;
-  /* width: 40%; */
+  overflow: hidden;
   width: fit-content;
-  padding: 0 2rem 3rem;
+  padding: 1rem 2rem 3rem;
   border: 1px black solid;
   box-sizing: border-box;
 }
 
-#rankings {
+#fish-cards-container {
+  background-color: #0288d1;
+  border: 1px black solid;
+  display: flex;
+  /* margin: auto; */
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  width: fit-content;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  max-height: calc(100% - 7rem);
+}
+
+#results-box {
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: rgb(236, 236, 225);
   border: 1px black solid;
   height: 100%;
@@ -265,49 +307,48 @@ body {
   padding: 1rem;
   box-sizing: border-box;
 }
-#dive-log h2,
-#rankings h2 {
+
+#dive-log-box h2,
+#results-box h2 {
   font-size: 1.5rem;
   text-align: center;
   font-family: Impact;
   font-weight: 400;
   margin-top: 1rem;
+  /* border: 1px black solid; */
 }
 
-#ranking-sub-box {
+#results-sub-box {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   /* border: 1px black solid; */
 }
 
 .row-results {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   font-size: 1.4rem;
   text-align: center;
 }
 
-.row-results p:nth-child(2) {
-  border: 1px black solid;
-  width: 2rem;
-  height: 2rem;
-  text-align: center;
+.row-results p:first-child {
+  max-width: 180px;
+  text-align: left;
 }
 
-#fish-cards-container {
-  background-color: #0288d1;
-  border: 1px black solid;
+.row-results p:nth-child(2) {
   display: flex;
-  margin: auto;
-  padding: 1rem;
-  width: fit-content;
-  flex-direction: column;
-  gap: 1rem;
-  overflow-y: auto;
-  height: 80%;
-  /* box-sizing: border-box; */
+  justify-content: center;
+  align-items: center;
+  border: 1px black solid;
+  min-width: 2rem;
+  max-width: fit-content;
+  padding: 0 0.3rem;
+  height: 2rem;
+  text-align: center;
 }
 
 .fish-card {

@@ -6,6 +6,7 @@ class Fish extends Element {
 
     this.swimmingSpeed = 2;
     this.node.src = randomFish.src;
+    this.scorePoints = randomFish["perfect-picture-score"];
   }
 
   fishSwim() {

@@ -20,6 +20,7 @@ const boxAnnouncementExtraAir = document.querySelector("#announcement-extra-air"
 const infoExtraAirNode = document.querySelector("#info-extra-air");
 const picturesAmountNode = document.querySelector("#pictures-amount");
 const perfectPicturesNode = document.querySelector("#perfect-pictures-amount");
+const scoreNodes = document.querySelectorAll(".score");
 
 //Elements in game over screen
 const diveLogFishCardsContainerNode = document.querySelector("#fish-cards-container");
@@ -36,7 +37,7 @@ streamUnderWaterAudio.volume = 0.2;
 //* GLOBAL GAME VARIABLES
 let gameIntervalId = null;
 let fishSpawnIntervadId = null;
-const airDuration = 45; //sec
+const airDuration = 10; //sec
 let airTimeRemaining = airDuration;
 let fishSpawnFrequency = 1500;
 let otherDiverAppearanceTime = [airDuration - 10, airDuration - 30, airDuration - 44];
@@ -46,14 +47,17 @@ let fishObj;
 let cameraObj;
 let otherDiverObj;
 const fishArray = [];
-
 const screenYPositionsForFishSpawningArr = [];
+
+let cameraBoxWidth = 110;
+let cameraBoxHeight = 90;
 
 //Picture related variables
 let takingPicture = false;
 let totalPicturesTaken = 0;
 const picturesTaken = [];
 let perfectPictures = 0;
+let score = 0;
 const perfectPicturesArr = [];
 let emptyPictures = 0;
 let fishPictures = 0;
@@ -78,7 +82,7 @@ function startGame() {
   //3. add any inital elements to the game
   diverObj = new Diver();
   console.log(diverObj);
-  cameraObj = new Camara(diverObj.x + 200, diverObj.y + 50, 110, 90);
+  cameraObj = new Camara(diverObj.x + 200, diverObj.y + 50, cameraBoxWidth, cameraBoxHeight);
   console.log(cameraObj);
 
   diverEntrySound.currentTime = 0;
@@ -114,6 +118,7 @@ function gameOver() {
 function updateGeneralResultsBox() {
   picturesTakenNode_gameOverScreen.innerText = picturesTaken.length;
   perfectPictures_gameOverScreen.innerText = perfectPictures;
+  // scoreNode.innerText = score;
 }
 
 function gameLoop() {
@@ -330,8 +335,12 @@ function capturePicture() {
 
   fishArray.forEach((fish) => {
     if (checkCollision(cameraObj, fish)) {
+      //Points for picture that has a fish
+      score += 500;
+
       let fishRigth = fish.x + fish.w;
       let fishBottom = fish.y + fish.h;
+
       // console.log(`position camera: x:${cameraObj.x} -${cameraRight}, y:${cameraObj.y}-${cameraBottom}`);
       // console.log(`position fish:   x:${fish.x}-${fishRigth}, y:${fish.y}-${fishBottom}`);
       // prettier-ignore
@@ -340,18 +349,23 @@ function capturePicture() {
             cameraObj.node.style.backgroundColor = "rgba(112, 234, 128, 0.5)"
             cameraObj.pictureQualityNode.style.display = "block"
             cameraObj.pictureQualityNode.innerText = "Perfect!"
+            //timeout for showing "perfect" next to the camera box
             setTimeout(() => {
               cameraObj.pictureQualityNode.style.display = "none"
             }, 700);
             perfectPictures++;
-            perfectPicturesNode.innerText = perfectPictures;
+            perfectPicturesNode.innerText = perfectPictures; 
+            score -= 500
+            score += fish.scorePoints;
+            scoreNodes.forEach(scoreNode => {scoreNode.innerText = score})
+            // scoreNode.innerText = score 
             perfectPicturesArr.push(fish.fishType)
       }
 
-      console.log(fish.fishType);
+      // console.log(fish.fishType);
       fishPictures++;
       picturesTaken.push(fish.fishType);
-      console.log(`Fish pictures: ${fishPictures}`);
+      // console.log(`Fish pictures: ${fishPictures}`);
     }
   });
   //todo Add Click sound
@@ -394,7 +408,26 @@ function setBackground(theme) {
     gameScreenNode.style.backgroundColor = `rgb(34, 114, 136)`;
   }
 }
+calculateFishArea();
+function calculateFishArea() {
+  let cameraArea = cameraBoxWidth * cameraBoxHeight;
+  console.log(`Camera area: ${cameraArea}`);
+  allFishNamesAndSizes.forEach((fish) => {
+    fish["area"] = fish.w * fish.h;
+    fish["Relationship-camaraBox %"] = Math.round((fish.area / cameraArea) * 10000) / 100;
+    fish["Relationship-camaraBox diff"] = cameraArea - fish.area;
+    if (fish["Relationship-camaraBox %"] >= 70) {
+      fish["perfect-picture-difficulty"] = 3; // high
+    } else if (fish["Relationship-camaraBox %"] >= 50 && fish["Relationship-camaraBox %"] < 70) {
+      fish["perfect-picture-difficulty"] = 2; // medium
+    } else {
+      fish["perfect-picture-difficulty"] = 1; // Easy
+    }
+    fish["perfect-picture-score"] = fish["perfect-picture-difficulty"] * 1000;
+  });
 
+  console.log(allFishNamesAndSizes);
+}
 //----------------------------------------------------------------------------------------
 // EVENT LISTENERS
 let focusActive = false;

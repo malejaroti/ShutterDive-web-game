@@ -10,6 +10,7 @@ class Camara {
     this.y = y;
     this.w = w;
     this.h = h;
+    this.area = this.w * this.h;
     this.node.style.height = `${this.h}px`;
     this.node.style.width = `${this.w}px`;
 
