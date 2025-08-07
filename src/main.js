@@ -38,6 +38,7 @@ const restartBtnNode = document.querySelector("#btn-restart");
 const cameraClickAudio = new Audio("./audio/singleCamaraClick.wav");
 const diverEntrySound = new Audio("./audio/diverEntrySound.wav");
 const streamUnderWaterAudio = new Audio("./audio/stream_underwater.ogg");
+const yaySound = new Audio("./audio/Yay.wav");
 streamUnderWaterAudio.volume = 0.2;
 
 //--------------------------------------------------------------------------------------------------
@@ -237,6 +238,8 @@ function despawnOtherDiver() {
 
 function checkCollisionWithOtherDiver() {
   if (otherDiverObj && checkCollision(diverObj, otherDiverObj)) {
+    yaySound.currentTime = 0;
+    yaySound.play();
     otherDiverObj.node.remove();
     otherDiverObj = null;
     increaseAir();
