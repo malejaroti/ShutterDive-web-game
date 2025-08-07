@@ -34,7 +34,7 @@ const allFishNamesAndSizes = [
   },
   {
     fishName: "Greenturtle",
-    src: `./images/Greenturtle.PNG`,
+    src: `./images/Greenturtle.png`,
     w: 100,
     h: 70,
   },
