@@ -10,23 +10,34 @@
   <body>
     <!-- START SCREEN -->
     <div id="start-screen" class="container">
-      <h1>Shutter Dive</h1>
+      <div class="subcontainer">
+        <h1>Shutter Dive</h1>
 
-      <input type="text" id="player-name" placeholder="Enter your name" />
-
-      <div id="theme-selection">
-        <h2>Select a Theme</h2>
-        <div id="themes">
-          <article id="night-theme" class="selected-theme">
-            <p>Night dive</p>
-          </article>
-          <article id="day-theme">
-            <p>Day dive</p>
-          </article>
+        <div id="instructions">
+          <p>
+            <strong>You are a professional diver photographer!</strong> <br />
+            Use <strong>Z</strong> to show the camera focus and <strong>X</strong> to take pictures.<br />
+            Move the diver with the arrow keys.<br />
+            Try to photograph as many different fish species as possible.<br />
+            Perfect pictures give you extra points!
+          </p>
         </div>
-      </div>
 
-      <button id="start-btn" class="btn">Start!</button>
+        <input type="text" id="player-name" placeholder="Enter your name" />
+        <div id="theme-selection">
+          <h2>Select a Theme</h2>
+          <div id="themes">
+            <article id="night-theme" class="selected-theme">
+              <p>Night dive</p>
+            </article>
+            <article id="day-theme">
+              <p>Day dive</p>
+            </article>
+          </div>
+        </div>
+
+        <button id="start-btn" class="btn">Start!</button>
+      </div>
     </div>
 
     <!-- GAME SCREEN -->
@@ -76,7 +87,7 @@
               <p id="pictures-taken"></p>
             </div>
             <div class="row-results">
-              <p>Perfect pictures taken</p>
+              <p><span class="green"> Perfect</span> pictures taken</p>
               <p id="perfect-taken"></p>
             </div>
             <div class="row-results">

@@ -46,30 +46,67 @@ body {
   background-size: contain;
   border: 1px black solid;
   position: relative;
+}
 
-  h1 {
-    /* border: 1px black solid; */
-    font-size: 5vw;
-    /* margin-bottom: 1rem; */
-    color: rgb(255, 255, 255, 0.8);
-    /* -webkit-text-stroke: 0.5px black; */
-    /* font-family: Barriecito; */
-    /* font-family: Rubik Iso; */
-    font-family: DynaPuff;
-    position: absolute;
-    top: 12%;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
+.subcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border: 1px black solid;
+}
+
+.subcontainer h1 {
+  /* border: 1px black solid; */
+  justify-self: flex-start;
+  font-size: 5vw;
+  color: rgb(255, 255, 255, 0.8);
+  /* -webkit-text-stroke: 0.5px black; */
+  /* font-family: Barriecito; */
+  /* font-family: Rubik Iso; */
+  font-family: DynaPuff;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  /* margin-bottom: 20rem; */
+}
+
+#instructions {
+  font-family: "Courier New", Courier, monospace;
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translateX(-50%);
+  font-size: 2vh;
+  /* margin-top: 400px; */
+  line-height: 1.5;
+  width: fit-content;
+  padding: 0.3rem 1rem;
+  /* height: auto; */
+  text-align: center;
+  /* color: rgb(8, 8, 8); */
+  color: white;
+  /* background-color: rgb(248, 250, 252, 0.5); */
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+
+  strong {
+    letter-spacing: 1px;
+    /* background-color: #4fc3f7; */
   }
 }
 
 #player-name {
   font-family: DynaPuff;
-  font-size: 1.5rem;
+  font-size: 3vh;
   text-align: center;
   position: absolute;
-  bottom: 10rem;
+  bottom: 15%;
 }
 
 #theme-selection {
@@ -164,7 +201,7 @@ body {
   font-family: DynaPuff;
   display: block;
   background: linear-gradient(180deg, #8ce0f0 0%, #4fc3f7 60%, #0288d1 100%);
-  height: 60px;
+  height: 6vh;
   width: 200px;
   color: white;
   font-size: 2rem;
@@ -180,7 +217,7 @@ body {
 
 #start-btn {
   position: absolute;
-  bottom: 2rem;
+  bottom: 5%;
 }
 /* Glossy highlight */
 #start-btn::before {
@@ -495,4 +532,8 @@ body {
   width: auto;
   color: white;
   box-sizing: border-box;
+}
+
+span.green {
+  color: rgb(2, 164, 24);
 }

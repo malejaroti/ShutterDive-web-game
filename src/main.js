@@ -181,8 +181,10 @@ function gameLoop() {
 }
 
 function handleDiverSwim(event) {
-  diverObj.swimHorizontally(event.key);
-  diverObj.swimVertically(event.key);
+  if (diverObj) {
+    diverObj.swimHorizontally(event.key);
+    diverObj.swimVertically(event.key);
+  }
 }
 function calculatePositionsForFishSpawning(numPoints) {
   console.log(`Game box height is: ${gameBoxNode.offsetHeight}`);
@@ -336,7 +338,7 @@ function showDiveLog() {
           <p class="fish-name-card">${fish.fishName}</p>
         </div>
         <p class="fish-pictures">${fish.pictures} ${wordPics}</p>
-        <p class="fish-pictures">${fish.perfectPictures} perfect</p>
+        <p class="fish-pictures">${fish.perfectPictures} <span class="green"> perfect</span></p>
        </article>
       `;
   });
