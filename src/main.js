@@ -58,6 +58,8 @@ let cameraBoxWidth = 110;
 let cameraBoxHeight = 90;
 
 //Picture related variables
+const keyForShowingFocus = "KeyZ";
+const keyForTakingPicture = "KeyX";
 let takingPicture = false;
 let totalPicturesTaken = 0;
 const picturesTaken = [];
@@ -485,7 +487,7 @@ document.addEventListener("keydown", handleDiverSwim);
 
 //Show camara Focus
 document.addEventListener("keydown", (event) => {
-  if (event.code === "KeyX") {
+  if (event.code === keyForShowingFocus) {
     cameraObj.node.style.display = "block";
     cameraObj.node.style.border = "2px dashed black";
     cameraObj.node.style.backgroundColor = "transparent";
@@ -494,7 +496,7 @@ document.addEventListener("keydown", (event) => {
 });
 //Hide camera focus
 document.addEventListener("keyup", (event) => {
-  if (event.code === "KeyX") {
+  if (event.code === keyForShowingFocus) {
     cameraObj.node.style.display = "none";
     focusActive = false;
   }
@@ -502,20 +504,16 @@ document.addEventListener("keyup", (event) => {
 
 //Take picture when "Key Y" is pressed
 document.addEventListener("keydown", (event) => {
-  if (event.code === "KeyZ") {
+  if (event.code === keyForTakingPicture) {
     capturePicture();
   }
 });
 
 //Return camera focus to normal transparent background after taking a picture
 document.addEventListener("keyup", (event) => {
-  if (event.code === "KeyZ") {
+  if (event.code === keyForTakingPicture) {
     if (focusActive === false) {
       cameraObj.node.style.display = "none";
-      // //keep camera screen active for 2 sec
-      // setTimeout(() => {
-      //   cameraObj.node.style.display = "none";
-      // }, 2000);
     } else {
       cameraObj.node.style.backgroundColor = "transparent";
       cameraObj.node.style.border = "2px dashed black";
