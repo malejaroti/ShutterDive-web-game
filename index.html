@@ -9,20 +9,22 @@
   </head>
   <body>
     <!-- START SCREEN -->
-    <div id="start-screen" class="container"></divid>>
-       <h1>Shutter Dive</h1>
-       
-       <div id="theme-selection">
+    <div id="start-screen" class="container">
+      <h1>Shutter Dive</h1>
+
+      <input type="text" id="player-name" placeholder="Enter your name" />
+
+      <div id="theme-selection">
         <h2>Select a Theme</h2>
         <div id="themes">
           <article id="night-theme" class="selected-theme">
             <p>Night dive</p>
           </article>
-          <article id="day-theme">            
+          <article id="day-theme">
             <p>Day dive</p>
           </article>
         </div>
-       </div>
+      </div>
 
       <button id="start-btn" class="btn">Start!</button>
     </div>
@@ -54,20 +56,21 @@
     <!-- GAME OVER  / DIVE LOG SCREEN  -->
     <div id="game-over-screen" class="container">
       <header>
-        <img src="./images/Diver.png" alt="Diver">
+        <img src="./images/Diver.png" alt="Diver" />
         <h1>Immersion data</h1>
       </header>
       <div id="box-game-over">
-        <div id="dive-log-box">
+        <div id="dive-log-box" class="game-over-panel">
           <h2>Your Dive Log</h2>
           <div id="fish-species-box">
             <p><span id="species-photographed">0</span> of <span id="total-species">0</span> species photographed</p>
           </div>
           <div id="fish-cards-container"></div>
         </div>
-        <div id="results-box">
+
+        <div class="game-over-panel">
           <h2>Results</h2>
-          <div id="results-sub-box">
+          <div id="results-sub-box" class="sub-box-right-panel">
             <div class="row-results">
               <p>Total pictures taken</p>
               <p id="pictures-taken"></p>
@@ -80,12 +83,21 @@
               <p>Score</p>
               <p class="score"></p>
             </div>
+          </div>
+
+          <div id="Rankings">
+            <h2>Ranking</h2>
+            <div id="ranking-sub-box" class="sub-box-right-panel">
+              <article class="row-ranking">
+                <p>Player name</p>
+                <p>Score</p>
+              </article>
+            </div>
+          </div>
         </div>
-      </div>
       </div>
 
       <button id="btn-restart" class="btn">Play again!</button>
-
     </div>
 
     <script src="./src/Element.js"></script>

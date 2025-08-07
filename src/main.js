@@ -4,13 +4,14 @@ const startScreenNode = document.querySelector("#start-screen");
 const gameScreenNode = document.querySelector("#game-screen");
 const gameOverScreenNode = document.querySelector("#game-over-screen");
 
-// buttons
+//Elements in Start screen
 const startBtnNode = document.querySelector("#start-btn");
 const nightThemeBtn = document.querySelector("#night-theme");
 const dayThemeNode = document.querySelector("#day-theme");
 const themeArticles = document.querySelectorAll("#themes article");
-const restartBtnNode = document.querySelector("#btn-restart");
+const playerNameInput = document.querySelector("#player-name");
 
+//Elements in Game Screen
 // game box
 const gameBoxNode = document.querySelector("#game-box");
 
@@ -28,6 +29,8 @@ const picturesTakenNode_gameOverScreen = document.querySelector("#pictures-taken
 const perfectPictures_gameOverScreen = document.querySelector("#perfect-taken");
 const speciesPhotographed = document.querySelector("#species-photographed");
 const totalSpecies = document.querySelector("#total-species");
+const rankingSubBox = document.querySelector("#ranking-sub-box");
+const restartBtnNode = document.querySelector("#btn-restart");
 
 //audio
 const cameraClickAudio = new Audio("./audio/singleCamaraClick.wav");
@@ -66,6 +69,7 @@ let fishPictures = 0;
 
 //General settings variables
 let selectedTheme = "night";
+let playerName = "";
 
 //--------------------------------------------------------------------------------------------------
 //* GLOBAL GAME FUNCTIONS
@@ -112,9 +116,14 @@ function gameOver() {
   streamUnderWaterAudio.currentTime = 0;
 
   //Show game over screen
+  let scoresFile = JSON.parse(localStorage.getItem("shutterDiveScores")) || [];
+  scoresFile.push({ name: playerName, score: score });
+  localStorage.setItem("shutterDiveScores", JSON.stringify(scoresFile));
+
   gameOverScreenNode.style.display = "flex";
   showDiveLog();
   updateGeneralResultsBox();
+  updateRanking();
 }
 
 function updateGeneralResultsBox() {
@@ -122,6 +131,32 @@ function updateGeneralResultsBox() {
   perfectPictures_gameOverScreen.innerText = perfectPictures;
   scoreNodes.forEach((scoreNode) => {
     scoreNode.innerText = score;
+  });
+}
+function clearAllRankings() {
+  localStorage.removeItem("shutterDiveScores");
+}
+// clearAllRankings();
+function updateRanking() {
+  let scores = JSON.parse(localStorage.getItem("shutterDiveScores")) || [];
+  // Sort
+  scores.sort((a, b) => b.score - a.score);
+
+  // clean before writting
+  rankingSubBox.innerHTML = `
+    <article class="row-ranking">
+      <p>Player name</p>
+      <p>Score</p>
+    </article>
+  `;
+  scores.forEach((entry) => {
+    rankingSubBox.innerHTML += `
+      <article class="row-ranking">
+        <p>${entry.name}</p>
+        <p>${entry.score}</p>
+      </article>
+    `;
+    console.log(`${entry.name}: ${entry.score}`);
   });
 }
 
@@ -384,6 +419,7 @@ function capturePicture() {
 function restartGame() {
   //1. Hide the game over screen
   gameOverScreenNode.style.display = "none";
+  playerNameInput.value = "";
 
   // Clear arrays in-place
   picturesTaken.length = 0;
@@ -446,7 +482,10 @@ function calculateFishArea() {
 //----------------------------------------------------------------------------------------
 // EVENT LISTENERS
 let focusActive = false;
-startBtnNode.addEventListener("click", startGame);
+startBtnNode.addEventListener("click", () => {
+  playerName = playerNameInput.value.trim() || "Anonymous";
+  startGame();
+});
 
 nightThemeBtn.addEventListener("click", () => {
   console.log("Night theme clicked");
