@@ -1,6 +1,4 @@
-NOTE: to copy this readme structure simply click on `Raw` on the top right of this gist. There you have the content in the basic [Markdown syntax](https://www.markdownguide.org/basic-syntax/) used in readme files. Then paste it on a README.md file in your repository and fill the information. Always do this directly from VS code, not from github. DON'T ADD THIS NOTE TO YOUR README.
-
-# ShutterDive - A
+# ShutterDive - _Uncover the Ocean’s Secrets — One Shot at a Time_
 
 ## [Play the Game!](https://malejaroti.github.io/ShutterDive-web-game/)
 
