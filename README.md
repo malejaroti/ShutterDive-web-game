@@ -1,4 +1,6 @@
-# ShutterDive - _Uncover the Ocean’s Secrets — One Shot at a Time_
+# ShutterDive
+
+### _Uncover the Ocean’s Secrets — One Shot at a Time_
 
 ## [Play the Game!](https://malejaroti.github.io/ShutterDive-web-game/)
 
