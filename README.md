@@ -1,14 +1,18 @@
 NOTE: to copy this readme structure simply click on `Raw` on the top right of this gist. There you have the content in the basic [Markdown syntax](https://www.markdownguide.org/basic-syntax/) used in readme files. Then paste it on a README.md file in your repository and fill the information. Always do this directly from VS code, not from github. DON'T ADD THIS NOTE TO YOUR README.
 
-# NAME OF YOUR PROYECT
+# ShutterDive - A
 
 ## [Play the Game!](https://malejaroti.github.io/ShutterDive-web-game/)
 
-![Game Logo](www.your-image-logo-here.com)
+![Game Logo](/images/Diver.png "Diver")
 
 # Description
 
-Shutter Dive is an underwater photography game where you control a diver, take pictures of marine life, and try to get perfect shots for extra points!
+Shutter Dive is an underwater photography game where you control a diver, take pictures of marine life, and aim for perfect shots to earn extra points!
+
+The game ends when your dive time runs out due to low air supply.
+
+It’s an educational game — by playing, users can discover the incredible variety of sea life that inhabits our oceans.
 
 # Main Functionalities
 
@@ -25,6 +29,7 @@ Shutter Dive is an underwater photography game where you control a diver, take p
   - "The collector": Goal is to photograph all species
   - "The identifier" Type the name of the animal you photographed
 - More fish species
+- Moving background
 
 # Technologies used
 
@@ -110,9 +115,9 @@ h: 50,
 
 [Link](https://excalidraw.com/#json=R7V2wJIyEX_tR3frH6Y4s,uUzu0qKuoJ3BfcoVdsSkMA)
 
-<!-- ### Slides -->
+### Slides -->
 
-<!-- [Link](www.your-slides-url-here.com) -->
+[Link](https://docs.google.com/presentation/d/1BZg6bPMrg5hh4CytLolTkWKgtuHJFvV_ehZkaEySJyA/edit?usp=sharing)
 
 ## Deploy
 
