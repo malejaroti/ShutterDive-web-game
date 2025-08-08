@@ -8,20 +8,31 @@
 
 # Description
 
-Shutter Dive is an underwater photography game where you control a diver, take pictures of marine life, and aim for perfect shots to earn extra points!
+Shutter Dive is an **underwater photography game** where you control a diver, take pictures of marine life, and aim for perfect shots to earn extra points!
 
 The game ends when your dive time runs out due to low air supply.
 
 It’s an educational game — by playing, users can discover the incredible variety of sea life that inhabits our oceans.
 
+🌊 The game currently features 13 different marine species, including fish, squids, turtles, and more!
+
 # Main Functionalities
 
 - Move the diver with arrow keys
-- Show camera focus with Z
-- Take pictures with X
-- Score system for photos and perfect shots
+- Show camera focus with `Z`
+- Take pictures with `X`
 - Air timer and extra air from other divers
 - Ranking system with local storage
+- Customizable theme: Night or Day dive
+- Dive log
+
+- 📸 Scoring System  
+  In Shutter Dive, players earn points by photographing marine animals. The scoring system rewards both presence and precision:
+
+  - ✅ Base Score
+    You get 500 points for any photo that contains an animal.
+
+  - 🌟 Perfect Picture Bonus - You earn extra points when you take a perfect shot — this means the animal is fully visible and centered within the camera focus box. - The bonus depends on how difficult it is to perfectly frame the animal, based on its size relative to the camera box.
 
 # Backlog Functionalities
 
@@ -33,7 +44,7 @@ It’s an educational game — by playing, users can discover the incredible var
 
 # Technologies used
 
-- HTML, CSS, Javascript, DOM Manipulation, Local Storage.
+- HTML, CSS, Javascript, DOM Manipulation, JS Audio, Local Storage.
 
 # States
 
@@ -43,12 +54,12 @@ It’s an educational game — by playing, users can discover the incredible var
 
 # Proyect Structure
 
-- main.js: Handles DOM, game logic, event listeners
-- Element.js: Base class for element positioning and swimming movement.
-- Diver.js: Diver logic
-- OtherDiver.js: Other diver logic
-- Fish.js: Fish logic
-- Camara.js: Camera logic
+- **main.js**: Handles DOM, game logic, event listeners
+- **Element.js**: Base class for element positioning and swimming movement.
+- **Diver.js**: Diver logic
+- **OtherDiver.js**: Other diver logic
+- **Fish.js**: Fish logic
+- **Camara.js**: Camera logic
 
 ## main.js
 
@@ -101,7 +112,8 @@ It’s an educational game — by playing, users can discover the incredible var
 
 ## Fish.js
 
-Contains an array of fish objects, with the source of the image, and the size it will have in the game. Each object looks like this:  
+Contains an array of fish objects, with the source of the image, and the size it will have in the game. Each object looks like this:
+
 {
 fishName: "Yellow cowfish",
 src: `./images/Fish-yellow-cowfish.png`,
