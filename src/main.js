@@ -12,6 +12,7 @@ const themeArticles = document.querySelectorAll("#themes article");
 const playerNameInput = document.querySelector("#player-name");
 const showInstructionsBtn = document.getElementById("show-instructions-btn");
 const instructionsNode = document.getElementById("instructions");
+const closeInstructionsBtn = document.getElementById("close-instructions");
 
 //Elements in Game Screen
 // game box
@@ -545,4 +546,8 @@ document.addEventListener("keydown", function (event) {
 
 showInstructionsBtn.addEventListener("click", () => {
   instructionsNode.style.display = instructionsNode.style.display === "none" ? "block" : "none";
+});
+
+closeInstructionsBtn.addEventListener("click", () => {
+  instructionsNode.style.display = "none";
 });

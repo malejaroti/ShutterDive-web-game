@@ -80,7 +80,7 @@ body {
   font-family: "Courier New", Courier, monospace;
   font-size: 2vh;
   line-height: 1.5;
-  width: fit-content;
+  min-width: 500px;
   padding: 0.3rem 1rem;
   text-align: center;
   color: white;
@@ -528,31 +528,31 @@ span.green {
 #show-instructions-btn {
   font-size: 1rem;
   position: absolute;
-  top: 2%;
+  top: 5%;
   right: 2%;
   width: 110px;
 }
 
 /* Pressed effect */
-#show-instructions-btn:active {
+.btn:active {
   transform: translateY(3px);
   box-shadow: 0 2px 0 #1976d2, 0 1px 8px rgba(0, 0, 0, 0.18);
 }
 
 #instructions {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2rem;
   display: none;
   position: absolute;
   left: 50%;
-  top: 40%;
+  top: 30%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 1rem;
   border-radius: 8px;
-  width: 80%;
-  max-width: 400px;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 1.2rem;
+  /* width: 35%; */
+  width: fit-content;
   line-height: 1.4;
   text-align: center;
   z-index: 1000;
@@ -564,6 +564,12 @@ span.green {
   /* border-top: 1px solid rgba(255, 255, 255, 0.3); */
 }
 
+#instructions span {
+  /* text-decoration: ita; */
+  /* font-style: oblique; */
+  font-weight: bold;
+}
+
 #instructions strong {
   color: #4fc3f7;
   /* background-color: rgb(2, 136, 209, 0.6); */
@@ -571,16 +577,33 @@ span.green {
   border-radius: 4px;
 }
 
-#instructions em {
-  color: #ffeb3b;
-  /* background-color: rgb(2, 136, 209, 0.6); */
-  padding: 0 0.2rem;
-  border-radius: 4px;
+#close-instructions {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1100;
 }
 
-#instructions small {
-  display: block;
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.7);
+.key {
+  border: 1px white solid;
+  padding: 0.2rem;
+}
+
+/* For laptop 13in (Chrome: width:998px, height:551px ) */
+@media (max-height: 600px) {
+  #show-instructions-btn {
+    width: 160px;
+  }
+
+  #instructions {
+    top: 35%;
+    font-size: 0.75rem;
+    width: 700px;
+    padding: 0.2rem 1rem;
+  }
 }
