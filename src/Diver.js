@@ -25,7 +25,7 @@ class Diver extends Element {
     this.w = w;
     this.h = h;
     this.node.src = src;
-    this.swimmingSpeed = 18;
+    this.swimmingSpeed = 20;
     this.swimmingDirection = "Right";
     this.speedBuoyancyEffect = 10;
     // this.node.style.border = "1px white solid";
