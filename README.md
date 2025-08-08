@@ -4,8 +4,7 @@
 
 ## [Play the Game!](https://malejaroti.github.io/ShutterDive-web-game/)
 
-![Game Logo](/images/Diver.png "Diver")
-<img src="/images/Diver.png" width="100" height="100" />
+![Game Logo]<img src="/images/Diver.png" width="300" height="300" />
 
 # Description
 
