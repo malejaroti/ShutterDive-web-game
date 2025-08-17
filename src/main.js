@@ -78,6 +78,9 @@ let pointsPerPerfectPictureDifficulty = 1000;
 //General settings variables
 let selectedTheme = "night";
 let playerName = "";
+// Background scrolling
+let bgOffsetX = 0;
+let bgScrollSpeed = 0.5; // pixels per frame; can tweak per theme
 
 //--------------------------------------------------------------------------------------------------
 //* GLOBAL GAME FUNCTIONS
@@ -170,6 +173,12 @@ function updateRanking() {
 
 function gameLoop() {
   positionCameraFocus();
+
+  // Scroll background for a moving effect
+  bgOffsetX -= bgScrollSpeed;
+  // Keep offset within a reasonable range to avoid large numbers
+  if (bgOffsetX < -100000) bgOffsetX = 0;
+  gameBoxNode.style.backgroundPosition = `${bgOffsetX}px 50%`;
 
   fishArray.forEach((fish) => {
     fish.swimHorizontally("Left");
@@ -444,10 +453,15 @@ function setBackground(theme) {
   if (theme === "night") {
     gameBoxNode.style.backgroundImage = `url("./images/Background_transparent.PNG")`;
     gameScreenNode.style.backgroundColor = `rgb(3, 1, 84)`;
+    bgScrollSpeed = 0.6;
   } else if (theme === "day") {
     gameBoxNode.style.backgroundImage = `url("./images/Background_option1.png")`;
     gameScreenNode.style.backgroundColor = `rgb(34, 114, 136)`;
+    bgScrollSpeed = 0.4;
   }
+  // Reset scroll when theme changes or game starts
+  bgOffsetX = 0;
+  gameBoxNode.style.backgroundPosition = `0px 50%`;
 }
 calculateFishAreaAndScores();
 function calculateFishAreaAndScores() {
